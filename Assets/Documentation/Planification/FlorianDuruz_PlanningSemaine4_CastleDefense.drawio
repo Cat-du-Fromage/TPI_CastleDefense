@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="AmbIO0eNBSl3mJiWK7nr" name="Page-1">
-        <mxGraphModel dx="1374" dy="753" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1374" dy="753" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="131" value="BackGroundLayer" style="locked=1;" parent="0"/>
@@ -129,8 +129,8 @@
                 <mxCell id="120" value="Analyse: Pathfinding en groupe" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="430" y="230" width="270" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="123" value="Semaine 4 (09.05.2022 - 12.05.2022): Pathfinding HPA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=17;fontStyle=1;fontColor=#333333;fontFamily=Times New Roman;" parent="17" vertex="1">
-                    <mxGeometry x="200" y="80" width="960" height="50" as="geometry"/>
+                <mxCell id="123" value="Semaine 4 (23.05.2022 - 26.05.2022): Pathfinding HPA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=17;fontStyle=1;fontColor=#333333;fontFamily=Times New Roman;" parent="17" vertex="1">
+                    <mxGeometry x="40" y="80" width="1120" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="128" value="Jour 4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=20;fontStyle=1;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="40" y="650" width="150" height="60" as="geometry"/>
@@ -177,28 +177,28 @@
                 <mxCell id="151" value="Documentation" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="360" y="750" width="120" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="154" value="Analyse des problèmes" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Times New Roman;" vertex="1" parent="17">
+                <mxCell id="154" value="Analyse des problèmes" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="200" y="230" width="230" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="155" value="Prototype&lt;br&gt;Temps: 1:00" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Times New Roman;" vertex="1" parent="17">
+                <mxCell id="155" value="Prototype&lt;br&gt;Temps: 1:00" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="1040" y="170" width="120" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="157" value="2eme prototype&lt;br&gt;Temps: 2:00" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Times New Roman;" vertex="1" parent="17">
+                <mxCell id="157" value="2eme prototype&lt;br&gt;Temps: 2:00" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="440" y="330" width="150" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="158" value="Analyse: Combat en Groupe" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Times New Roman;" vertex="1" parent="17">
+                <mxCell id="158" value="Analyse: Combat en Groupe" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="360" y="590" width="320" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="159" value="Prototype&lt;br&gt;Temps: 2:00" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Times New Roman;" vertex="1" parent="17">
+                <mxCell id="159" value="Prototype&lt;br&gt;Temps: 2:00" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="760" y="490" width="240" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="160" value="Documentation" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Times New Roman;" vertex="1" parent="17">
+                <mxCell id="160" value="Documentation" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="630" y="550" width="130" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="161" value="Test de Validation" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Times New Roman;" vertex="1" parent="17">
+                <mxCell id="161" value="Test de Validation" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="830" y="270" width="170" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="163" value="Test de Validation&lt;br&gt;Temps: 1:25" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Times New Roman;" vertex="1" parent="17">
+                <mxCell id="163" value="Test de Validation&lt;br&gt;Temps: 1:25" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="480" y="650" width="130" height="50" as="geometry"/>
                 </mxCell>
             </root>
