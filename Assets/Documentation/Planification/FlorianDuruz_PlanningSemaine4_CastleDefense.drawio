@@ -1,9 +1,9 @@
 <mxfile host="65bd71144e">
     <diagram id="AmbIO0eNBSl3mJiWK7nr" name="Page-1">
-        <mxGraphModel dx="1374" dy="753" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1374" dy="753" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
-                <mxCell id="131" value="BackGroundLayer" style="locked=1;" parent="0"/>
+                <mxCell id="131" value="BackGroundLayer" style="" parent="0"/>
                 <mxCell id="132" value="" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=16;gradientDirection=east;fillColor=#d5e8d4;strokeColor=#82b366;opacity=30;" parent="131" vertex="1">
                     <mxGeometry x="40" y="650" width="1120" height="140" as="geometry"/>
                 </mxCell>
@@ -16,9 +16,9 @@
                 <mxCell id="135" value="" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=16;gradientDirection=east;fillColor=#f8cecc;strokeColor=none;opacity=30;" parent="131" vertex="1">
                     <mxGeometry x="40" y="170" width="1120" height="140" as="geometry"/>
                 </mxCell>
-                <mxCell id="1" style="locked=1;" parent="0"/>
+                <mxCell id="1" style="" parent="0"/>
                 <mxCell id="24" value="" style="shape=crossbar;whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
-                    <mxGeometry x="920" y="150" width="240" height="20" as="geometry"/>
+                    <mxGeometry x="920" y="140" width="240" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="33" value="" style="endArrow=none;dashed=1;html=1;rounded=0;sourcePerimeterSpacing=0;jumpStyle=line;jumpSize=10;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=1;strokeColor=#8C8C8C;startSize=6;endSize=6;" parent="1" target="56" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -51,13 +51,13 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="50" value="" style="shape=crossbar;whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
-                    <mxGeometry x="680" y="150" width="240" height="20" as="geometry"/>
+                    <mxGeometry x="680" y="140" width="240" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="55" value="" style="shape=crossbar;whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
-                    <mxGeometry x="440" y="150" width="240" height="20" as="geometry"/>
+                    <mxGeometry x="440" y="140" width="240" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="56" value="" style="shape=crossbar;whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
-                    <mxGeometry x="200" y="150" width="240" height="20" as="geometry"/>
+                    <mxGeometry x="200" y="140" width="240" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="103" value="" style="endArrow=none;html=1;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -129,7 +129,7 @@
                 <mxCell id="120" value="Analyse: Pathfinding en groupe" style="html=1;shape=mxgraph.infographic.ribbonSimple;notch1=5.29;notch2=5.57;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="430" y="230" width="270" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="123" value="Semaine 4 (23.05.2022 - 26.05.2022): Pathfinding HPA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=17;fontStyle=1;fontColor=#333333;fontFamily=Times New Roman;" parent="17" vertex="1">
+                <mxCell id="123" value="Semaine 4 (23.05.2022 - 26.05.2022): Intelligence Artificielle" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=24;fontStyle=1;fontColor=#333333;fontFamily=Times New Roman;" parent="17" vertex="1">
                     <mxGeometry x="40" y="80" width="1120" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="128" value="Jour 4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=20;fontStyle=1;fontFamily=Times New Roman;" parent="17" vertex="1">
