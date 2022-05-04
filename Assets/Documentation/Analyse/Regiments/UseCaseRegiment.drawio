@@ -1,0 +1,107 @@
+<mxfile host="65bd71144e">
+    <diagram id="K7pVhEMrvBA5JRgljfHY" name="Page-1">
+        <mxGraphModel dx="1074" dy="753" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Frame" parent="0"/>
+                <mxCell id="3" value="Preselection" style="shape=umlFrame;whiteSpace=wrap;html=1;width=120;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="2">
+                    <mxGeometry x="200" y="40" width="440" height="410" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="" style="edgeStyle=none;html=1;" edge="1" parent="2" source="5" target="6">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" style="edgeStyle=none;html=1;" edge="1" parent="2" source="5" target="8">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Regiments" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="2">
+                    <mxGeometry x="120" y="80" width="40" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Units attached&lt;br&gt;to Regiment" style="ellipse;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="2">
+                    <mxGeometry x="280" y="90" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="edgeStyle=none;html=1;" edge="1" parent="2" source="8" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Units" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="2">
+                    <mxGeometry x="120" y="320" width="40" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Position" style="ellipse;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="2">
+                    <mxGeometry x="280" y="330" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="" style="edgeStyle=none;html=1;" edge="1" parent="2" source="12" target="14">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" style="edgeStyle=none;html=1;" edge="1" parent="2" source="12" target="21">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" style="edgeStyle=none;html=1;" edge="1" parent="2" source="12" target="17">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Preselection&lt;br&gt;Controller" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="2">
+                    <mxGeometry x="680" y="200" width="40" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="Check Mouse Hover&lt;br&gt;Units" style="ellipse;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="2">
+                    <mxGeometry x="480" y="330" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;" edge="1" parent="2" source="10" target="14">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="340" y="500" as="sourcePoint"/>
+                        <mxPoint x="500" y="500" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="Preselect&lt;br&gt;Regiment" style="ellipse;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="2">
+                    <mxGeometry x="480" y="210" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;" edge="1" parent="2" source="6" target="17">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="740" y="250" as="sourcePoint"/>
+                        <mxPoint x="900" y="250" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="DePreselect&lt;br&gt;Regiment" style="ellipse;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="2">
+                    <mxGeometry x="480" y="90" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="Selection" style="shape=umlFrame;whiteSpace=wrap;html=1;width=120;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="2">
+                    <mxGeometry x="320" y="520" width="320" height="410" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="" style="edgeStyle=none;html=1;" edge="1" parent="2" source="32" target="33">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="Preselection&lt;br&gt;Controller" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="2">
+                    <mxGeometry x="240" y="720" width="40" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="Regiments&lt;br&gt;Preselected" style="ellipse;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="2">
+                    <mxGeometry x="360" y="730" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="" style="edgeStyle=none;html=1;" edge="1" parent="2" source="35" target="36">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" style="edgeStyle=none;html=1;" edge="1" parent="2" source="35" target="45">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="Selection&lt;br&gt;Controller" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="2">
+                    <mxGeometry x="680" y="640" width="40" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="Select&lt;br&gt;Regiments" style="ellipse;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="2">
+                    <mxGeometry x="480" y="810" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;" edge="1" parent="2" source="33" target="36">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="340" y="980" as="sourcePoint"/>
+                        <mxPoint x="500" y="980" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="44" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="html=1;verticalAlign=bottom;labelBackgroundColor=none;endArrow=open;endFill=0;dashed=1;" edge="1" parent="2" source="17" target="14">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="388.5522009588799" y="152.9876477767234" as="sourcePoint"/>
+                        <mxPoint x="511.5889360201311" y="226.95336161207865" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="45" value="Deselect&lt;br&gt;Regiments" style="ellipse;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="2">
+                    <mxGeometry x="480" y="650" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
