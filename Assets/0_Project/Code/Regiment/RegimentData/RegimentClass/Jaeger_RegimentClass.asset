@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2a392629ee22e4bbdf76f4a2257036, type: 3}
+  m_Name: Jaeger_RegimentClass
+  m_EditorClassIdentifier: 
+  PrefabUnit: {fileID: 4546918022380904158, guid: 231b562fe8e1efe479c64e4d03dc2fd9,
+    type: 3}
+  PrefabPlacement: {fileID: 6969508022250319429, guid: 7735e9a3115e7804eb0cfcb676e2820d,
+    type: 3}
+  BaseHealth: 1
+  BaseMorale: 1
+  Range: 1
+  MeleeAttack: 1
+  Speed: 1
+  BaseNumUnits: 16
+  MinRow: 4
+  MaxRow: 10
+  SpaceBetweenUnits: 0.5

@@ -1,5 +1,18 @@
 {
   "dependencies": {
+    "com.kaizerwaldcode.kw-utils": {
+      "version": "https://github.com/Cat-du-Fromage/kwUtils.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.5",
+        "com.unity.collections": "1.1.0",
+        "com.unity.addressables": "1.19.15",
+        "com.unity.burst": "1.0.0-pre.6",
+        "com.unity.inputsystem": "1.2.0"
+      },
+      "hash": "54c50ab41dfbaa0e2503a60fc5e9536efda3c635"
+    },
     "com.unity.addressables": {
       "version": "1.19.19",
       "depth": 0,
@@ -24,7 +37,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "1.15.16",
+      "version": "1.15.17",
       "depth": 0,
       "source": "registry",
       "dependencies": {
