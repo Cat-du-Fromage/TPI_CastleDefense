@@ -22,7 +22,7 @@ namespace KaizerWald
             }
         }
 
-        public void RegisterNewRegiment<T>(IRegiment regiment)
+        public void RegisterNewRegiment<T>(Regiment regiment)
         where T: IHighlightable
         {
             Records.TryAdd(regiment.RegimentID, new IHighlightable[regiment.Units.Length]);

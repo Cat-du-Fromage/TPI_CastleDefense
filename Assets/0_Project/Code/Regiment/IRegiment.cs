@@ -2,7 +2,7 @@
 
 namespace KaizerWald
 {
-    
+    /*
     public interface IRegiment
     {
         public Transform[] Units { get; set; }
@@ -20,6 +20,12 @@ namespace KaizerWald
             
             //Envoyer le message au IScrivener
         }
+    }
+    */
+
+    public interface ISelectable
+    {
+        public bool IsSelected { get; set; }
     }
 
     public abstract class RegimentBehaviour : MonoBehaviour

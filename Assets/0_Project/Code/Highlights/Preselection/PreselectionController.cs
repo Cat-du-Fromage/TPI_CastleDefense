@@ -89,7 +89,7 @@ namespace KaizerWald
         //Mouse Hover : No Drag
         private void MouseHoverSingleEntity(in Ray singleRay, int numHits)
         {
-            preselectionCandidate = Hits[0].transform.GetComponentInParent<Unit>().RegimentAttach;
+            preselectionCandidate = Hits[0].transform.GetComponent<Unit>().RegimentAttach;
             if (numHits > 1)
             {
                 if (!AreUnitsFromSameRegiment(preselectionCandidate.RegimentID, numHits))
@@ -97,7 +97,7 @@ namespace KaizerWald
                     bool hit = Raycast(singleRay, out RaycastHit unitHit, INFINITY, 1 << 7);
                     preselectionCandidate = hit == false
                         ? preselectionCandidate
-                        : unitHit.transform.GetComponentInParent<Unit>().RegimentAttach;
+                        : unitHit.transform.GetComponent<Unit>().RegimentAttach;
                 }
             }
             if (preselectionCandidate.IsPreSelected) return;
@@ -108,7 +108,7 @@ namespace KaizerWald
             {
                 for (int i = 1; i < numHits; i++)
                 {
-                    int regimentId = Hits[i].transform.GetComponentInParent<Unit>().RegimentAttach.RegimentID;
+                    int regimentId = Hits[i].transform.GetComponent<Unit>().RegimentAttach.RegimentID;
                     if (firstHitRegimentIndex != regimentId) return false;
                 }
                 return true;

@@ -2,7 +2,7 @@
 {
     public interface IUnit
     {
-        IRegiment RegimentAttach { get; set; }
+        Regiment RegimentAttach { get; set; }
         public int IndexInRegiment { get; set; }
 
         public void OnKilled() => RegimentAttach.OnUnitKilled(IndexInRegiment);

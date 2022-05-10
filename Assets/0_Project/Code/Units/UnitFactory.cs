@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace KaizerWald
 {
-    
     public class UnitFactory : MonoBehaviour
     {
         public List<Transform> CreateRegimentsUnit(Regiment regiment)
@@ -23,13 +22,12 @@ namespace KaizerWald
                 newUnit.name = $"{regimentClass.PrefabUnit.name}_{i}";
                 units.Add(InitializeUnitComponent(newUnit, i).transform);
             }
-
             return units;
 
             Unit InitializeUnitComponent(GameObject unit, int index)
             {
                 Unit component = unit.GetComponent<Unit>();
-                component.RegimentAttach = regiment.GetComponent<IRegiment>();
+                component.RegimentAttach = regiment.GetComponent<Regiment>();
                 component.IndexInRegiment = index;
                 component.GetComponent<UnitAnimation>().InitIdleRandom(index);
                 return component;
