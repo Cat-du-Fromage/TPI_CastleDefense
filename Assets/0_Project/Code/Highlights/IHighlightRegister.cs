@@ -16,7 +16,7 @@ namespace KaizerWald
                 for (int i = 0; i < highlights.Length; i++)
                 {
                     Vector3 unitPosition = units[i].position;
-                    T highlight = GameObject.Instantiate(Prefab, unitPosition + Vector3.up * 0.05f, Quaternion.identity).GetComponent<T>();
+                    T highlight = Object.Instantiate(Prefab, unitPosition + Vector3.up * 0.05f, Quaternion.identity).GetComponent<T>();
                     highlights[i] = highlight;
                 }
             }
