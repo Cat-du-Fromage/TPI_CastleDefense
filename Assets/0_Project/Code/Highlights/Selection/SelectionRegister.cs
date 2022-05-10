@@ -6,18 +6,18 @@ using KWUtils;
 
 namespace KaizerWald
 {
-    public class SelectionRegister : IHighlightRegister<Selection>
+    public class SelectionRegister : MonoBehaviour, IHighlightRegister
     {
         public GameObject Prefab { get; set; }
-        public Dictionary<int, Selection[]> Records { get; set; }
-
-        public SelectionRegister(GameObject prefab, List<IRegiment> regiments)
+        public Dictionary<int, IHighlightable[]> Records { get; set; }
+        
+        public void InitializeRegister(GameObject prefab, List<IRegiment> regiments)
         {
             Prefab = prefab;
-            Records = new Dictionary<int, Selection[]>(regiments.Count);
+            Records = new Dictionary<int, IHighlightable[]>(regiments.Count);
             foreach (IRegiment regiment in regiments)
             {
-                (this as IHighlightRegister<Selection>).RegisterNewRegiment(regiment);
+                this.AsInterface<IHighlightRegister>().RegisterNewRegiment<Selection>(regiment);
             }
         }
     }

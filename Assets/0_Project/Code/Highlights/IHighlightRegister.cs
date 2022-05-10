@@ -3,15 +3,15 @@ using UnityEngine;
 
 namespace KaizerWald
 {
-    public interface IHighlightRegister<T>
-    where T : IHighlightable
+    public interface IHighlightRegister
     {
         public GameObject Prefab { get; }
-        public Dictionary<int, T[]> Records { get; set; }
+        public Dictionary<int, IHighlightable[]> Records { get; set; }
 
-        public void PopulateRecords(Transform[] units)
+        public void PopulateRecords<T>(Transform[] units)
+        where T: IHighlightable
         {
-            foreach ((_, T[] highlights) in Records)
+            foreach ((_, IHighlightable[] highlights) in Records)
             {
                 for (int i = 0; i < highlights.Length; i++)
                 {
@@ -22,10 +22,11 @@ namespace KaizerWald
             }
         }
 
-        public void RegisterNewRegiment(IRegiment regiment)
+        public void RegisterNewRegiment<T>(IRegiment regiment)
+        where T: IHighlightable
         {
-            Records.TryAdd(regiment.RegimentID, new T[regiment.Units.Length]);
-            PopulateRecords(regiment.Units);
+            Records.TryAdd(regiment.RegimentID, new IHighlightable[regiment.Units.Length]);
+            PopulateRecords<T>(regiment.Units);
         }
         
         public void OnUnitUpdate(int regimentID, int unitIndexInRegiment)

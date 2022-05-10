@@ -13,10 +13,10 @@ namespace KaizerWald
         public void OnKilled() => RegimentAttach.OnUnitKilled(IndexInRegiment);
     }
     
-    public interface IGeneral
+    public interface ICoordinator
     {
         public List<IRegiment> Regiments { get; set; }
-        IHighlightRegister<IHighlightable>[] Registers { get; set; }
+        IHighlightRegister[] Registers { get; set; }
 
         public void OnRegimentUpdate(IRegiment regiment)
         {
@@ -41,50 +41,47 @@ namespace KaizerWald
     //Donc si Highlight => Dictionary<int, IHighlightable[]>
 
 
-    public class RegimentManager : MonoBehaviour, IGeneral
+    public class RegimentManager : MonoBehaviour, ICoordinator
     {
         [SerializeField] private GameObject prefabPreselection;
         [SerializeField] private GameObject prefabSelection;
         public List<IRegiment> Regiments { get; set; }
         public List<Regiment> RegimentsNoInterface { get; set; }
-        public IHighlightRegister<IHighlightable>[] Registers { get; set; }
+        public IHighlightRegister[] Registers { get; set; }
 
         private PreselectionRegister preselectionRegister;
         private SelectionRegister selectionRegister;
 
         private void Awake()
         {
+            preselectionRegister = GetComponent<PreselectionRegister>();
+            selectionRegister = GetComponent<SelectionRegister>();
+                
             RegimentsNoInterface = GetComponent<RegimentFactory>().CreateRegiments();
             Regiments = new List<IRegiment>(RegimentsNoInterface.Count);
-            
-            //RegimentsNoInterface.ForEach(r => Regiments.Add(r.GetComponent<IRegiment>()));
 
-            foreach (var r in RegimentsNoInterface)
+            foreach (Regiment regiment in RegimentsNoInterface)
             {
-                if (r is IRegiment iRegiment)
-                {
-                    Regiments.Add(iRegiment);
-                }
+                IRegiment iRegiment = regiment;
+                //if (regiment is IRegiment iRegiment)
+                //{
+                Regiments.Add(iRegiment);
+                //}
             }
-            //Debug.Log(Regiments.Count);
+
+            preselectionRegister.InitializeRegister(prefabPreselection, Regiments);
+            selectionRegister.InitializeRegister(prefabSelection, Regiments);
         }
 
         private void Start()
         {
-            preselectionRegister = new PreselectionRegister(prefabPreselection, Regiments);
-            selectionRegister = new SelectionRegister(prefabSelection, Regiments);
-            
-            Debug.Log(preselectionRegister.Records.Count);
-            Debug.Log(selectionRegister.Records.Count);
-
-            Registers = new IHighlightRegister<IHighlightable>[2];
-            if (preselectionRegister is IHighlightRegister<IHighlightable> register1) Registers[0] = register1;
-            if (selectionRegister is IHighlightRegister<IHighlightable> register2) Registers[1] = register2;
-            //Registers = new[] {preselectionRegister.GetRegister, selectionRegister as IHighlightRegister<IHighlightable>};
+            Registers = new IHighlightRegister[2];
+            Registers[0] = preselectionRegister.transform.GetComponent<IHighlightRegister>();
+            Registers[1] = selectionRegister.transform.GetComponent<IHighlightRegister>();
 
             for (int i = 0; i < Registers.Length; i++)
             {
-                Debug.Log(Registers[i].Records.Count);
+                Debug.Log($"{Registers[i].Records.Count}");
             }
         }
     }

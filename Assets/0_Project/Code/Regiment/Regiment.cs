@@ -7,7 +7,7 @@ namespace KaizerWald
     public class Regiment : MonoBehaviour, IRegiment
     {
         public Transform[] Units { get; set; }
-        public IGeneral General { get; set; }
+        public ICoordinator Coordinator { get; set; }
         public int RegimentID { get; set; }
         
         public RegimentClass RegimentClass { get; private set; }
