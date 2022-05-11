@@ -8,17 +8,14 @@ namespace KaizerWald
         public GameObject Prefab { get; }
         public Dictionary<int, IHighlightable[]> Records { get; set; }
 
-        public void PopulateRecords<T>(Transform[] units)
+        public void PopulateRecords<T>(int regimentID, Transform[] units)
         where T: IHighlightable
         {
-            foreach ((_, IHighlightable[] highlights) in Records)
+            for (int i = 0; i < Records[regimentID].Length; i++)
             {
-                for (int i = 0; i < highlights.Length; i++)
-                {
-                    Vector3 unitPosition = units[i].position;
-                    T highlight = Object.Instantiate(Prefab, unitPosition + Vector3.up * 0.05f, Quaternion.identity).GetComponent<T>();
-                    highlights[i] = highlight;
-                }
+                Vector3 unitPosition = units[i].position;
+                T highlight = Object.Instantiate(Prefab, unitPosition + Vector3.up * 0.05f, Quaternion.identity).GetComponent<T>();
+                Records[regimentID][i] = highlight;
             }
         }
 
@@ -26,7 +23,7 @@ namespace KaizerWald
         where T: IHighlightable
         {
             Records.TryAdd(regiment.RegimentID, new IHighlightable[regiment.Units.Length]);
-            PopulateRecords<T>(regiment.Units);
+            PopulateRecords<T>(regiment.RegimentID, regiment.Units);
         }
         
         public void OnUnitUpdate(int regimentID, int unitIndexInRegiment)

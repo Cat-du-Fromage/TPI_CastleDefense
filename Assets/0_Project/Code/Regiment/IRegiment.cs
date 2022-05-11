@@ -8,7 +8,7 @@ namespace KaizerWald
         public bool IsPreselected { get; set; }
         public bool IsSelected { get; set;}
     }
-
+/*
     public abstract class RegimentBehaviour : MonoBehaviour, ISelectable
     {
         public int RegimentID { get; set; }
@@ -41,4 +41,5 @@ namespace KaizerWald
         public bool IsSelected { get; set; }
         
     }
+    */
 }

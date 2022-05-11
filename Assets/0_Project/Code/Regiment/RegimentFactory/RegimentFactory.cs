@@ -25,6 +25,7 @@ namespace KaizerWald
 
         public List<Regiment> CreateRegiments()
         {
+            Debug.Log($"Num regiment To Create: {CreationOrders.Length}");
             unitFactory = GetComponent<UnitFactory>();
             if (CreationOrders.IsNullOrEmpty()) return null;
 
@@ -57,7 +58,7 @@ namespace KaizerWald
                 previousRegimentClass = currentRegimentClass;
             }
 
-            regiments.TrimExcess();
+            //regiments.TrimExcess();
             return regiments;
         }
 

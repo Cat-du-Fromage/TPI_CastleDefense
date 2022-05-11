@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.026700953, g: 0.29866886, b: 0.49627915, a: 1}
+  m_IndirectSpecularColor: {r: 0.026566118, g: 0.29867774, b: 0.49624193, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 988505844}
   - component: {fileID: 988505843}
   - component: {fileID: 988505842}
+  - component: {fileID: 988505846}
   m_Layer: 0
   m_Name: RegimentSystem
   m_TagString: Untagged
@@ -323,10 +324,10 @@ MonoBehaviour:
     RegimentClass: {fileID: 11400000, guid: 4d0fd65f197628145aec9888fa9209f2, type: 2}
   - Number: 1
     RegimentClass: {fileID: 11400000, guid: c5e39402e78068b4f92d5cad03d8e454, type: 2}
-  - Number: 0
-    RegimentClass: {fileID: 0}
-  - Number: 0
-    RegimentClass: {fileID: 0}
+  - Number: 1
+    RegimentClass: {fileID: 11400000, guid: 122d46e616348284d96f5ce1f1afffac, type: 2}
+  - Number: 1
+    RegimentClass: {fileID: 11400000, guid: 31532ab6ff211f141a57361481b382e0, type: 2}
 --- !u!114 &988505843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +371,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &988505846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988505841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17bd9221ba631bd469d7a7ebb2c1461e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RegimentManager: {fileID: 0}
+  PlayerCamera: {fileID: 0}
 --- !u!1001 &1706437426
 PrefabInstance:
   m_ObjectHideFlags: 0
