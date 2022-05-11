@@ -11,31 +11,20 @@ namespace KaizerWald
         [SerializeField] private GameObject prefabSelection;
         public List<Regiment> Regiments { get; set; }
         public IHighlightRegister[] Registers { get; set; }
-
-        private PreselectionRegister preselectionRegister;
-        private SelectionRegister selectionRegister;
+        public PreselectionRegister PreselectionRegister { get; private set; }
+        public SelectionRegister SelectionRegister { get; private set; }
 
         private void Awake()
         {
             Regiments = GetComponent<RegimentFactory>().CreateRegiments();
             
-            /*
-            List<Regiment> regimentsNoInterface = GetComponent<RegimentFactory>().CreateRegiments();
-            Regiments = new List<IRegiment>(regimentsNoInterface.Count);
-
-            foreach (Regiment regiment in regimentsNoInterface)
-            {
-                IRegiment iRegiment = regiment;
-                Regiments.Add(iRegiment);
-            }
-*/
-            preselectionRegister = new PreselectionRegister(prefabPreselection, Regiments);
-            selectionRegister = new SelectionRegister(prefabSelection, Regiments);
+            PreselectionRegister = new PreselectionRegister(prefabPreselection, Regiments);
+            SelectionRegister = new SelectionRegister(prefabSelection, Regiments);
         }
 
         private void Start()
         {
-            Registers = new IHighlightRegister[] {preselectionRegister, selectionRegister};
+            Registers = new IHighlightRegister[] {PreselectionRegister, SelectionRegister};
         }
     }
 }

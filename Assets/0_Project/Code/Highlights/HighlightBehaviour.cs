@@ -1,23 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using KWUtils;
 using UnityEngine;
 
 namespace KaizerWald
 {
     
-    public abstract class HighlightBehaviour : MonoBehaviour
+    public abstract class HighlightBehaviour
     {
+        private readonly Vector3 yOffset = new Vector3(0, 0.05f, 0); 
         //protected abstract Dictionary<Regiment, List<T>> Highlights { get; set; }
         protected IHighlightRegister HighlightRegister;
         private Dictionary<int, IHighlightable[]> Highlights => HighlightRegister.Records;
-        
+
         public virtual void OnEnableHighlight(Regiment regiment)
         {
             if (regiment == null) return;
             if (!Highlights.TryGetValue(regiment.RegimentID, out IHighlightable[] highlights)) return;
-
+            
             for (int i = 0; i < highlights.Length; i++)
             {
+                Vector3 unitPosition = regiment.Units[i].position + yOffset;
+                
+                if (regiment.Units[i].position.xz() != highlights[i].HighlightTransform.position.xz())
+                {
+                    highlights[i].HighlightTransform.position = unitPosition;
+                }
+                
                 highlights[i].HighlightRenderer.enabled = true;
             }
         }
@@ -26,6 +35,7 @@ namespace KaizerWald
         {
             if (regiment == null) return;
             if (!Highlights.TryGetValue(regiment.RegimentID, out IHighlightable[] highlights)) return;
+            
             for (int i = 0; i < highlights.Length; i++)
             {
                 highlights[i].HighlightRenderer.enabled = false;

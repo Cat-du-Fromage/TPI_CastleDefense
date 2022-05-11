@@ -15,6 +15,7 @@ namespace KaizerWald
         {
             Prefab = prefab;
             Records = new Dictionary<int, IHighlightable[]>(regiments.Count);
+            
             IHighlightRegister registerInterface = this;
             foreach (Regiment regiment in regiments)
             {

@@ -1,52 +1,44 @@
 ﻿using UnityEngine;
+using UnityEngine.Jobs;
 
 namespace KaizerWald
 {
-    /*
-    public interface IRegiment
-    {
-        public Transform[] Units { get; set; }
-        public ICoordinator Coordinator { get; set; }
-        public int RegimentID { get; set; }
-
-        //UNIT REARRANGE HERE!
-        public void OnUnitKilled(int unitIndexInRegiment)
-        {
-            //Units.Rearrange(unitIndexInRegiment);
-            Coordinator.OnUnitUpdate(RegimentID, unitIndexInRegiment);
-            //Faire le ménage ICI
-            
-            //Placer l'algorithme ici
-            
-            //Envoyer le message au IScrivener
-        }
-    }
-    */
-
     public interface ISelectable
     {
-        public bool IsSelected { get; set; }
+        public bool IsPreselected { get; set; }
+        public bool IsSelected { get; set;}
     }
 
-    public abstract class RegimentBehaviour : MonoBehaviour
+    public abstract class RegimentBehaviour : MonoBehaviour, ISelectable
     {
-        public Transform[] Units { get; set; }
-        public ICoordinator Coordinator { get; set; }
         public int RegimentID { get; set; }
+        public ICoordinator Coordinator { get; set; }
+        public Transform[] Units { get; set; }
+
+        public TransformAccessArray UnitsTransformAccessArray { get; protected set; }
         
         public RegimentClass RegimentClass { get; private set; }
         public void SetRegimentClass(RegimentClass regimentClass) => RegimentClass = regimentClass;
+        
+        
 
         //UNIT REARRANGE HERE!
         public void OnUnitKilled(int unitIndexInRegiment)
         {
             //Units.Rearrange(unitIndexInRegiment);
-            Coordinator.OnUnitUpdate(RegimentID, unitIndexInRegiment);
+            Coordinator.OnUnitKilled(RegimentID, unitIndexInRegiment);
             //Faire le ménage ICI
             
             //Placer l'algorithme ici
             
             //Envoyer le message au IScrivener
         }
+
+        //==================================================
+        //IPreselectable Interface
+        //==================================================
+        public bool IsPreselected { get; set; }
+        public bool IsSelected { get; set; }
+        
     }
 }

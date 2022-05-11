@@ -8,9 +8,8 @@ using UnityEngine;
 namespace KaizerWald
 {
     /*
-    public sealed class PreselectionResponse : HighlightBehaviour<Preselection>
+    public sealed class PreselectionResponse : HighlightBehaviour
     {
-        
         public IHighlightRegister Register { get; set; }
         protected override Dictionary<Regiment, List<Preselection>> Highlights { get; set; } = new(2);
 
@@ -23,7 +22,6 @@ namespace KaizerWald
         {
             base.OnEnableHighlight(regiment);
             regiment.TogglePreSelected(true);
-            Register.OnRegister(this, regiment);
         }
 
         public override void OnDisableHighlight(Regiment regiment)

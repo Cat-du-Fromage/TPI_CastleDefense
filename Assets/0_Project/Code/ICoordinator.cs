@@ -6,8 +6,11 @@ namespace KaizerWald
     {
         public List<Regiment> Regiments { get; set; }
         IHighlightRegister[] Registers { get; set; }
+        
+        public PreselectionRegister PreselectionRegister { get; }
+        public SelectionRegister SelectionRegister { get; }
 
-        public void OnRegimentUpdate(Regiment regiment)
+        public void OnRegimentKilled(Regiment regiment)
         {
             for (int i = 0; i < Registers.Length; i++)
             {
@@ -16,7 +19,7 @@ namespace KaizerWald
             Regiments.Remove(regiment);
         }
         
-        public void OnUnitUpdate(int regimentID, int unitIndexInRegiment)
+        public void OnUnitKilled(int regimentID, int unitIndexInRegiment)
         {
             for (int i = 0; i < Registers.Length; i++)
             {

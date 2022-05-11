@@ -13,7 +13,7 @@ namespace KaizerWald
         {
             HighlightTransform = transform;
             HighlightRenderer = GetComponent<Renderer>();
-            HighlightRenderer.enabled = true;
+            HighlightRenderer.enabled = false;
         }
     }
 }
