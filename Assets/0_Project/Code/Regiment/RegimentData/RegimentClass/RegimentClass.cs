@@ -25,6 +25,7 @@ namespace KaizerWald
         public int MinColumn => BaseNumUnits / MinRow;
         public int MaxColumn => BaseNumUnits / MaxRow;
 
+        public float SpaceSizeBetweenUnit => UnitSize.x + SpaceBetweenUnits;
         private void OnEnable()
         {
             UnitSize = PrefabPlacement.GetComponent<MeshFilter>().sharedMesh.bounds.size;

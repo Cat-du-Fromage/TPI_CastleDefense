@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.026566118, g: 0.29867774, b: 0.49624193, a: 1}
+  m_IndirectSpecularColor: {r: 0.026700953, g: 0.29866886, b: 0.49627915, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabPreselection: {fileID: 7284396673661896506, guid: 85f7674582f12d848a27b301127cbc1a,
     type: 3}
-  prefabSelection: {fileID: 3614250492761392, guid: d59131cfee6236c418c9a28f3c3f3f2d,
+  <PrefabSelection>k__BackingField: {fileID: 3614250492761392, guid: d59131cfee6236c418c9a28f3c3f3f2d,
     type: 3}
 --- !u!4 &988505845
 Transform:
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 2056201408}
   - component: {fileID: 2056201407}
   - component: {fileID: 2056201406}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}

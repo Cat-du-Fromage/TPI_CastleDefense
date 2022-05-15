@@ -25,7 +25,7 @@ namespace KaizerWald
         [SerializeField] private RegimentManager RegimentManager;
         [SerializeField] private Camera PlayerCamera;
 
-        private PlayerControls controls;
+        //private PlayerControls controls;
 
         public bool ClickDragPerformed{ get; private set; }
         private Vector2 startLMouse;
@@ -35,7 +35,7 @@ namespace KaizerWald
         private Regiment preselectionCandidate;
         private readonly RaycastHit[] Hits = new RaycastHit[4];
 
-        public event Action<bool> OnLeftClickReleased;
+        //public event Action<bool> OnLeftClickReleased;
 
         private void Awake()
         {
@@ -52,9 +52,10 @@ namespace KaizerWald
         {
             preselectionRegister = RegimentManager.PreselectionRegister;
             
-            controls ??= new PlayerControls();
-            controls.Preselection.Enable();
-            controls.Preselection.SetCallbacks(this);
+            //controls ??= new PlayerControls();
+            
+            RegimentManager.Controls.Preselection.Enable();
+            RegimentManager.Controls.Preselection.SetCallbacks(this);
         }
         //------------------------------------------------------------------------------------------------------------------
         //Single Unit Preselection
@@ -135,13 +136,14 @@ namespace KaizerWald
                     PreselectionMethodChoice();
                     break;
                 case InputActionPhase.Canceled:
-                    OnLeftClickReleased?.Invoke(ClickDragPerformed);
-                    OnLeftMouseReleased();
+                    //OnLeftClickReleased?.Invoke(ClickDragPerformed);
+                    //OnLeftMouseReleased();
+                    ClickDragPerformed = false;
                     break;
             }
         }
 
-        private void OnLeftMouseReleased()
+        public void OnLeftMouseReleased()
         {
             if (!ClickDragPerformed) return;
             ClearPreSelections();

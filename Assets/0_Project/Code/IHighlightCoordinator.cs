@@ -1,14 +1,20 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace KaizerWald
 {
-    public interface ICoordinator
+    public interface IHighlightCoordinator
     {
         public List<Regiment> Regiments { get; set; }
         IHighlightRegister[] Registers { get; set; }
         
         public PreselectionRegister PreselectionRegister { get; }
-        public SelectionRegister SelectionRegister { get; }
+        public SelectionSystem SelectionSystem { get; }
+        public PlacementSystem PlacementSystem { get; }
+        public PlayerControls Controls { get; }
+        public List<Regiment> PreselectedRegiments => PreselectionRegister.PreselectedRegiments;
+        public List<Regiment> SelectedRegiments => SelectionSystem.Register.SelectedRegiments;
+        
 
         public void OnRegimentKilled(Regiment regiment)
         {
@@ -24,6 +30,14 @@ namespace KaizerWald
             for (int i = 0; i < Registers.Length; i++)
             {
                 Registers[i].OnUnitUpdate(regimentID, unitIndexInRegiment);
+            }
+        }
+
+        public void DispatchEvent(HighlightBehaviour sender)
+        {
+            if (sender is SelectionRegister)
+            {
+                PreselectionRegister.OnClearHighlight();
             }
         }
     }

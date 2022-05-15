@@ -44,9 +44,9 @@ namespace KaizerWald
         public override void OnClearHighlight()
         {
             base.OnClearHighlight();
-            foreach (Regiment preselected in PreselectedRegiments)
+            for (int i = 0; i < PreselectedRegiments.Count; i++)
             {
-                preselected.IsPreselected = false;
+                PreselectedRegiments[i].IsPreselected = false;
             }
             PreselectedRegiments.Clear();
         }

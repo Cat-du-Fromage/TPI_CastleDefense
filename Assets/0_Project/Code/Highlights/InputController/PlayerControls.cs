@@ -141,8 +141,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""RightMouseClickAndMove"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""d32fb7de-7e1c-42e9-9e6c-ad3679670f8c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SpaceKey"",
+                    ""type"": ""Button"",
+                    ""id"": ""1bc57889-f4c6-4152-9195-c755ab2d7615"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -182,6 +191,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""RightMouseClickAndMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80136c70-d599-49b4-9e62-fbaa17168c14"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpaceKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -316,6 +336,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // Placement
         m_Placement = asset.FindActionMap("Placement", throwIfNotFound: true);
         m_Placement_RightMouseClickAndMove = m_Placement.FindAction("RightMouseClickAndMove", throwIfNotFound: true);
+        m_Placement_SpaceKey = m_Placement.FindAction("SpaceKey", throwIfNotFound: true);
         // Preselection
         m_Preselection = asset.FindActionMap("Preselection", throwIfNotFound: true);
         m_Preselection_MouseMove = m_Preselection.FindAction("MouseMove", throwIfNotFound: true);
@@ -432,11 +453,13 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Placement;
     private IPlacementActions m_PlacementActionsCallbackInterface;
     private readonly InputAction m_Placement_RightMouseClickAndMove;
+    private readonly InputAction m_Placement_SpaceKey;
     public struct PlacementActions
     {
         private @PlayerControls m_Wrapper;
         public PlacementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @RightMouseClickAndMove => m_Wrapper.m_Placement_RightMouseClickAndMove;
+        public InputAction @SpaceKey => m_Wrapper.m_Placement_SpaceKey;
         public InputActionMap Get() { return m_Wrapper.m_Placement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -449,6 +472,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @RightMouseClickAndMove.started -= m_Wrapper.m_PlacementActionsCallbackInterface.OnRightMouseClickAndMove;
                 @RightMouseClickAndMove.performed -= m_Wrapper.m_PlacementActionsCallbackInterface.OnRightMouseClickAndMove;
                 @RightMouseClickAndMove.canceled -= m_Wrapper.m_PlacementActionsCallbackInterface.OnRightMouseClickAndMove;
+                @SpaceKey.started -= m_Wrapper.m_PlacementActionsCallbackInterface.OnSpaceKey;
+                @SpaceKey.performed -= m_Wrapper.m_PlacementActionsCallbackInterface.OnSpaceKey;
+                @SpaceKey.canceled -= m_Wrapper.m_PlacementActionsCallbackInterface.OnSpaceKey;
             }
             m_Wrapper.m_PlacementActionsCallbackInterface = instance;
             if (instance != null)
@@ -456,6 +482,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @RightMouseClickAndMove.started += instance.OnRightMouseClickAndMove;
                 @RightMouseClickAndMove.performed += instance.OnRightMouseClickAndMove;
                 @RightMouseClickAndMove.canceled += instance.OnRightMouseClickAndMove;
+                @SpaceKey.started += instance.OnSpaceKey;
+                @SpaceKey.performed += instance.OnSpaceKey;
+                @SpaceKey.canceled += instance.OnSpaceKey;
             }
         }
     }
@@ -543,6 +572,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     public interface IPlacementActions
     {
         void OnRightMouseClickAndMove(InputAction.CallbackContext context);
+        void OnSpaceKey(InputAction.CallbackContext context);
     }
     public interface IPreselectionActions
     {

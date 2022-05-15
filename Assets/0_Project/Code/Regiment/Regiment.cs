@@ -9,7 +9,7 @@ namespace KaizerWald
     public class Regiment : MonoBehaviour, ISelectable
     {
         public int RegimentID { get; set; }
-        public ICoordinator Coordinator { get; set; }
+        public IHighlightCoordinator HighlightCoordinator { get; set; }
         public Transform[] Units { get; set; }
 
         public TransformAccessArray UnitsTransformAccessArray { get; protected set; }
@@ -23,7 +23,7 @@ namespace KaizerWald
         public void OnUnitKilled(int unitIndexInRegiment)
         {
             //Units.Rearrange(unitIndexInRegiment);
-            Coordinator.OnUnitKilled(RegimentID, unitIndexInRegiment);
+            HighlightCoordinator.OnUnitKilled(RegimentID, unitIndexInRegiment);
             //Faire le ménage ICI
             
             //Placer l'algorithme ici

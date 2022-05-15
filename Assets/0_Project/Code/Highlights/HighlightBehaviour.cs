@@ -9,13 +9,14 @@ namespace KaizerWald
     public abstract class HighlightBehaviour
     {
         private readonly Vector3 yOffset = new Vector3(0, 0.05f, 0); 
-        //protected abstract Dictionary<Regiment, List<T>> Highlights { get; set; }
+        
         protected IHighlightRegister HighlightRegister;
         private Dictionary<int, IHighlightable[]> Highlights => HighlightRegister.Records;
 
         public virtual void OnEnableHighlight(Regiment regiment)
         {
             if (regiment == null) return;
+            
             if (!Highlights.TryGetValue(regiment.RegimentID, out IHighlightable[] highlights)) return;
             
             for (int i = 0; i < highlights.Length; i++)

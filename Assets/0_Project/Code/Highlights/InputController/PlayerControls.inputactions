@@ -119,8 +119,17 @@
             "actions": [
                 {
                     "name": "RightMouseClickAndMove",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "d32fb7de-7e1c-42e9-9e6c-ad3679670f8c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SpaceKey",
+                    "type": "Button",
+                    "id": "1bc57889-f4c6-4152-9195-c755ab2d7615",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -160,6 +169,17 @@
                     "action": "RightMouseClickAndMove",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "80136c70-d599-49b4-9e62-fbaa17168c14",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpaceKey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
