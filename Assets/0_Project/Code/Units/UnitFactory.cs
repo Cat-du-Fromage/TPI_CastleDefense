@@ -18,9 +18,13 @@ namespace KaizerWald
             for (int i = 0; i < regimentClass.BaseNumUnits; i++)
             {
                 Vector3 positionInRegiment = GetPositionInRegiment(i);
-                GameObject newUnit = Instantiate(regimentClass.PrefabUnit, positionInRegiment, Quaternion.identity);
+                GameObject newUnit = Instantiate(regimentClass.PrefabUnit, positionInRegiment, regiment.transform.rotation);
                 newUnit.name = $"{regimentClass.PrefabUnit.name}_{i}";
                 units.Add(InitializeUnitComponent(newUnit, i).transform);
+                //==================================================================================================
+                //TEMP FOR AI
+                newUnit.layer = regiment.IsPlayer ? LayerMask.NameToLayer("Player") : LayerMask.NameToLayer("Enemy");
+                //==================================================================================================
             }
             return units;
 

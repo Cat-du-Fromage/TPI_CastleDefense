@@ -25,7 +25,7 @@ namespace KaizerWald
         [SerializeField] private RegimentManager RegimentManager;
         [SerializeField] private Camera PlayerCamera;
 
-        //private PlayerControls controls;
+        private LayerMask selectionLayer = 1 << 7 | 1 << 10 | 1 << 11;
 
         public bool ClickDragPerformed{ get; private set; }
         private Vector2 startLMouse;
@@ -73,7 +73,7 @@ namespace KaizerWald
         private void CheckMouseHoverUnit()
         {
             Ray singleRay = PlayerCamera.ScreenPointToRay(endLMouse);
-            int numHits = SphereCastNonAlloc(singleRay, 0.5f, Hits,INFINITY,1 << 7);
+            int numHits = SphereCastNonAlloc(singleRay, 0.5f, Hits,INFINITY,selectionLayer);
 
             if (NoHits(numHits)) return;
             MouseHoverSingleEntity(singleRay, numHits);
@@ -98,7 +98,7 @@ namespace KaizerWald
             {
                 if (!AreUnitsFromSameRegiment(Hits[0].transform.GetComponent<IUnit>().RegimentAttach.RegimentID, numHits))
                 {
-                    bool hit = Raycast(singleRay, out RaycastHit unitHit, INFINITY, 1 << 7);
+                    bool hit = Raycast(singleRay, out RaycastHit unitHit, INFINITY, selectionLayer);
                     preselectionCandidate = hit == false
                         ? preselectionCandidate
                         : unitHit.transform.GetComponent<IUnit>().RegimentAttach;

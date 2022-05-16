@@ -74,7 +74,8 @@ namespace KaizerWald
 
         private Regiment InstantiateRegiment(RegimentClass regimentClass, int index, float offsetPosition)
         {
-            Vector3 position = offsetPosition * Vector3.right;
+            Vector3 position = transform.position + offsetPosition * Vector3.right;
+            
 
             GameObject newRegiment = new($"{regimentClass.name}", typeof(Regiment));
             newRegiment.transform.SetPositionAndRotation(position, Quaternion.identity);

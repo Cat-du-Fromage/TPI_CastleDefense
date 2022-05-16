@@ -319,6 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32368792e1a921f45aef57fe0ce9b1d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsForPlayerRegiment: 1
   CreationOrders:
   - Number: 1
     RegimentClass: {fileID: 11400000, guid: 4d0fd65f197628145aec9888fa9209f2, type: 2}
@@ -454,6 +455,84 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a52a396b9d5b2d4991061e0c54a0f85, type: 3}
+--- !u!1 &1819718773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1819718774}
+  - component: {fileID: 1819718776}
+  - component: {fileID: 1819718775}
+  - component: {fileID: 1819718777}
+  m_Layer: 0
+  m_Name: RegimentEnemySystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1819718774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819718773}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1819718775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819718773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32368792e1a921f45aef57fe0ce9b1d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsForPlayerRegiment: 0
+  CreationOrders:
+  - Number: 1
+    RegimentClass: {fileID: 11400000, guid: 4d0fd65f197628145aec9888fa9209f2, type: 2}
+--- !u!114 &1819718776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819718773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71b39925b137cdb4db13feb7268c9da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1819718777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819718773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400a03262846b6f4a958bb0b543d4982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabPreselection: {fileID: 7284396673661896506, guid: 85f7674582f12d848a27b301127cbc1a,
+    type: 3}
+  <PrefabSelection>k__BackingField: {fileID: 3614250492761392, guid: d59131cfee6236c418c9a28f3c3f3f2d,
+    type: 3}
 --- !u!1 &2056201405
 GameObject:
   m_ObjectHideFlags: 0

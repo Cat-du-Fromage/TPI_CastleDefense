@@ -9,40 +9,48 @@ namespace KaizerWald
 {
     public static class ShootingBehaviour
     {
-        private static bool IsTargetInRange(Regiment r)
+        public static bool IsTargetInRange(Regiment r, out RaycastHit hit)
         {
             Vector3 centerFirstLineRegiment = (r.Units[0].position + r.Units[r.CurrentLineFormation].position) / 2f;
-            Vector3 directionUnit = r.Units[0].position.DirectionTo(r.Units[r.CurrentLineFormation].position);
+            Vector3 directionUnit = r.Units[0].position.DirectionTo(r.Units[r.CurrentLineFormation].position).normalized;
 
             float lineSize = r.Units[0].position.DistanceTo(r.Units[r.CurrentLineFormation].position);
             //Bounds rectangleRange = new Bounds(Vector3.Cross(directionUnit, Vector3.up), )
                 
-            NativeArray<RaycastHit> results = new (1, Allocator.Temp);
-            NativeArray<BoxcastCommand> commands = new (1, Allocator.Temp);
+            NativeArray<RaycastHit> results = new (1, Allocator.TempJob);
+            NativeArray<BoxcastCommand> commands = new (1, Allocator.TempJob);
 
-            Vector3 directionRegiment = Vector3.Cross(directionUnit, Vector3.up);
+            Vector3 directionRegiment = Vector3.Cross(directionUnit, Vector3.up).normalized;
             
             Vector3 center = centerFirstLineRegiment + directionRegiment * r.regimentShootRange;
             Vector2 halfExtents = new Vector2(lineSize, r.regimentShootRange) * 0.5f;
             Quaternion orientation = Quaternion.LookRotation(directionRegiment,Vector3.up);
-            Vector3 direction = Vector3.forward;
+            Vector3 direction = directionRegiment;
+
+            LayerMask layer = r.IsPlayer ? LayerMask.NameToLayer("Enemy") : LayerMask.NameToLayer("Player");
+            if (r.IsPlayer)
+            {
+                layer = LayerMask.NameToLayer("Enemy");
+            }
+            else
+            {
+                layer =LayerMask.NameToLayer("Player");
+            }
             
-            //LayerMask layer = r.IsPlayer ? 
-            commands[0] = new BoxcastCommand(center, halfExtents, orientation, direction);
+            commands[0] = new BoxcastCommand(center, halfExtents, orientation, direction, layer);
 
             JobHandle handle = BoxcastCommand.ScheduleBatch(commands, results, 1,  default(JobHandle));
             handle.Complete();
             
             RaycastHit batchedHit = results[0];
-            if (batchedHit.collider == null)
-            {
-                
-            }
-            
-            
+            hit = batchedHit;
             results.Dispose();
             commands.Dispose();
-            return false;
+            if (batchedHit.collider == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
