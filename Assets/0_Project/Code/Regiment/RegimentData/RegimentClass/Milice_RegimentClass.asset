@@ -23,6 +23,6 @@ MonoBehaviour:
   Speed: 1
   UnitSize: {x: 1.0000001, y: 0.1553831, z: 1.3000003}
   BaseNumUnits: 40
-  MinRow: 20
-  MaxRow: 40
+  MinRow: 10
+  MaxRow: 20
   SpaceBetweenUnits: 0.5

@@ -10,5 +10,6 @@ namespace KaizerWald
         public Regiment RegimentAttach { get; set; }
         public int IndexInRegiment { get; set; }
         //public void SetRegiment(IRegiment assignedRegiment) => Regiment = assignedRegiment;
+        
     }
 }

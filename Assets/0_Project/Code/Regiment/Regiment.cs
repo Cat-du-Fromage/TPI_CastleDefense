@@ -1,6 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using KWUtils;
+using Unity.Collections;
+using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Jobs;
 
@@ -8,17 +12,58 @@ namespace KaizerWald
 {
     public class Regiment : MonoBehaviour, ISelectable
     {
+        public bool IsPlayer { get; set; }
+        
+        //Interface
+        public bool IsPreselected { get; set; }
+        public bool IsSelected { get; set; }
+        
+        //Properties
         public int RegimentID { get; set; }
         public IHighlightCoordinator HighlightCoordinator { get; set; }
+
         public Transform[] Units { get; set; }
-
-        public TransformAccessArray UnitsTransformAccessArray { get; protected set; }
+        public TransformAccessArray UnitsTransformAccessArray { get; private set; }
         
+        public int CurrentLineFormation { get; private set; }
         public RegimentClass RegimentClass { get; private set; }
-        public void SetRegimentClass(RegimentClass regimentClass) => RegimentClass = regimentClass;
-        
-        
 
+        public float regimentShootRange = 10f;
+        
+        //==============================================================================================================
+        // Private Setters
+        //==============================================================================================================
+        
+        public void SetRegimentClass(RegimentClass regimentClass)
+        {
+            RegimentClass = regimentClass;
+            CurrentLineFormation = RegimentClass.MinRow;
+        }
+        public void SetCurrentLineFormation(int unitPerLine) => CurrentLineFormation = unitPerLine;
+
+        //==============================================================================================================
+        // Unity Events
+        //==============================================================================================================
+        
+        private void Start()
+        {
+            UnitsTransformAccessArray = new TransformAccessArray(Units, Units.Length);
+        }
+
+        private void Update()
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void OnDestroy()
+        {
+            if(UnitsTransformAccessArray.isCreated) UnitsTransformAccessArray.Dispose();
+        }
+
+        //==============================================================================================================
+
+        
+        
         //UNIT REARRANGE HERE!
         public void OnUnitKilled(int unitIndexInRegiment)
         {
@@ -30,17 +75,5 @@ namespace KaizerWald
             
             //Envoyer le message au IScrivener
         }
-        private void Start()
-        {
-            UnitsTransformAccessArray = new TransformAccessArray(Units, Units.Length);
-        }
-
-        private void OnDestroy()
-        {
-            if(UnitsTransformAccessArray.isCreated) UnitsTransformAccessArray.Dispose();
-        }
-
-        public bool IsPreselected { get; set; }
-        public bool IsSelected { get; set; }
     }
 }

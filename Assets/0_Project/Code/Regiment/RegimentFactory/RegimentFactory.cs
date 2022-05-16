@@ -17,6 +17,11 @@ namespace KaizerWald
     [RequireComponent(typeof(UnitFactory))]
     public class RegimentFactory : MonoBehaviour
     {
+        //==================================================================================================
+        //TEMP FOR AI
+        [field: SerializeField] private bool IsForPlayerRegiment = true;
+        //==================================================================================================
+        
         private const float SPACE_BETWEEN_REGIMENT = 2.5f;
         private UnitFactory unitFactory;
 
@@ -51,7 +56,12 @@ namespace KaizerWald
                     offsetPosition += GetOffset(currentRegimentClass, j) + SPACE_BETWEEN_REGIMENT; //Careful it adds the const even if j=0!
                     Regiment regiment = InstantiateRegiment(currentRegimentClass, i * numberToSpawn + j, offsetPosition);
                     regiments.Add(regiment);
-
+                    
+                    //==================================================================================================
+                    //TEMP FOR AI
+                    regiment.IsPlayer = IsForPlayerRegiment; 
+                    //==================================================================================================
+                    
                     regiment.Units = unitFactory.CreateRegimentsUnit(regiment).ToArray();
                 }
 
