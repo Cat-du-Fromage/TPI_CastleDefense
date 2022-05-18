@@ -10,6 +10,7 @@ using UnityEngine.InputSystem.Controls;
 using static UnityEngine.Mathf;
 using static UnityEngine.Physics;
 using static Unity.Mathematics.math;
+using static Unity.Mathematics.quaternion;
 using static PlayerControls;
 
 namespace KaizerWald
@@ -21,6 +22,7 @@ namespace KaizerWald
         private IHighlightCoordinator coordinator;
         private PlacementRegister register;
 
+        private bool mouseStartValid;
         private Vector3 mouseStart;
         private Vector3 mouseEnd;
 
@@ -33,7 +35,7 @@ namespace KaizerWald
             highlightCoordinator.Controls.Placement.Enable();
             highlightCoordinator.Controls.Placement.SetCallbacks(this);
         }
-        
+
         public void OnRightMouseClickAndMove(InputAction.CallbackContext context)
         {
             //Guard Clause: need regiments selected
@@ -41,15 +43,14 @@ namespace KaizerWald
             
             if (context.started)
             {
-                mouseStart = mouseEnd = GetMousePositionOnTerrain(context.ReadValue<Vector2>());
+                mouseStartValid = GetMouseStart(context.ReadValue<Vector2>());
             }
-            else if (context.performed)
+            else if (context.performed && mouseStartValid)
             {
-                if (mouseStart == Vector3.negativeInfinity) return;
-                mouseEnd = GetMousePositionOnTerrain(context.ReadValue<Vector2>());
+                if(!GetMouseEnd(context.ReadValue<Vector2>())) return;
                 
-                //Guard Clause: drag mouse long enough
                 mouseDistance = mouseStart.DistanceTo(mouseEnd); //Vector3.Distance(mouseEnd, mouseStart);
+                //Guard Clause: drag mouse long enough
                 if (mouseDistance < coordinator.SelectedRegiments[0].RegimentClass.SpaceSizeBetweenUnit) return;
                 PlaceRegiments();
             }
@@ -61,12 +62,20 @@ namespace KaizerWald
             }
         }
 
-        private Vector3 GetMousePositionOnTerrain(Vector2 mouseInput)
+        private bool GetMouseStart(Vector2 mouseInput)
         {
             Ray singleRay = playerCamera.ScreenPointToRay(mouseInput);
             bool hit = Raycast(singleRay, out RaycastHit singleHit, Mathf.Infinity, 1 << 8);
-            
-            return hit ? singleHit.point : Vector3.negativeInfinity;
+            mouseStart = select(mouseStart, singleHit.point, hit);
+            return hit;
+        }
+        
+        private bool GetMouseEnd(Vector2 mouseInput)
+        {
+            Ray singleRay = playerCamera.ScreenPointToRay(mouseInput);
+            bool hit = Raycast(singleRay, out RaycastHit singleHit, Mathf.Infinity, 1 << 8);
+            mouseEnd = select(mouseEnd, singleHit.point, hit);
+            return hit;
         }
 
         public void OnSpaceKey(InputAction.CallbackContext context)
@@ -87,6 +96,9 @@ namespace KaizerWald
 
         public void PlaceRegiments()
         {
+            //if (float.IsPositiveInfinity(mouseDistance)) return;
+            
+            //Debug.Log($"values: d:{mouseDistance} mouse: {mouseEnd} bool: {Approximately(mouseDistance, 0) || mouseEnd == Vector3.negativeInfinity}");
             float minRegimentsFormationSize = MinSizeFormation();
             //First Guard Clause : mouse goes far enough
             if (mouseDistance <= minRegimentsFormationSize/2f) return;
@@ -156,7 +168,7 @@ namespace KaizerWald
                 {
                     Vector3 position = new (formationPositions[j].x, 0.05f, formationPositions[j].z);
                     register.Records[coordinator.SelectedRegiments[i].RegimentID][j]
-                        .HighlightTransform.SetPositionAndRotation(position, Quaternion.LookRotation(-columnDirection, Vector3.up));
+                        .HighlightTransform.SetPositionAndRotation(position, LookRotationSafe(-columnDirection, Vector3.up));
                 }
 
                 offsetRegiment += (numUnitPerLine * unitSpaceSize);
