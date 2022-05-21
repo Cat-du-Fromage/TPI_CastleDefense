@@ -2,7 +2,8 @@
 {
     public interface IHighlightSystem
     {
-        IHighlightCoordinator Coordinator { get; }
-        IHighlightRegister Register { get; }
+        public IHighlightRegister Register { get; }
+        
+        public IHighlightCoordinator Coordinator { get; }
     }
 }

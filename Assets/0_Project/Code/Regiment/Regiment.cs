@@ -12,8 +12,6 @@ namespace KaizerWald
 {
     public class Regiment : MonoBehaviour, ISelectable
     {
-        
-        
         //Interface
         public bool IsPreselected { get; set; }
         public bool IsSelected { get; set; }

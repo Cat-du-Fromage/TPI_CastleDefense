@@ -12,6 +12,8 @@ namespace KaizerWald
         public List<Regiment> Regiments { get; set; }
         public IHighlightRegister[] Registers { get; set; }
         public PreselectionRegister PreselectionRegister { get; private set; }
+        
+        public PreselectionSystem PreselectionSystem { get; private set; }
         public SelectionSystem SelectionSystem { get; private set; }
         
         public PlacementSystem PlacementSystem { get; private set; }
