@@ -28,6 +28,7 @@ namespace KaizerWald
             {
                 registerInterface.RegisterNewRegiment<Preselection>(regiment);
             }
+            SetUpTransformAccess();
         }
         
         public override void OnEnableHighlight(Regiment regiment)

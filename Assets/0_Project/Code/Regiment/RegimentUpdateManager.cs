@@ -112,13 +112,19 @@ namespace KaizerWald
         public void Execute(int index, TransformAccess transform)
         {
             //Rotation
-            transform.rotation = Quaternion.Slerp(transform.rotation, GoalsRotation[index], DeltaTime * Speed);
+            
+            quaternion rotation = math.slerp(transform.rotation, GoalsRotation[index], DeltaTime * Speed);
+            transform.rotation = rotation;//Quaternion.Slerp(transform.rotation, GoalsRotation[index], DeltaTime * Speed);
             
             //Position
-            Vector3 newPosition = Vector3.Lerp(transform.position, GoalsPosition[index], (DeltaTime * Speed));
-
+            //Vector3 newPosition = Vector3.Lerp(transform.position, GoalsPosition[index], (DeltaTime * Speed));
+            float2 goalPos = new float2(GoalsPosition[index].x, GoalsPosition[index].z);
+            float2 currentPos = new float2(transform.position.x, transform.position.z);
+            float2 direction =  math.normalizesafe(goalPos - currentPos);
+            
+            Vector3 newPosition = transform.position + (DeltaTime * Speed) * new Vector3(direction.x, 0.0f, direction.y);
             //Apply Changes to GameObject's Transform
-            transform.position = newPosition.Flat();
+            transform.position = newPosition;
         }
     }
 }
