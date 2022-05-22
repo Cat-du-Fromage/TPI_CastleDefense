@@ -17,11 +17,12 @@ namespace KaizerWald
 {
     public class PlacementController : IPlacementActions
     {
-        private Camera playerCamera;
-        
-        private IHighlightCoordinator coordinator;
-        private PlacementRegister register;
+        private readonly IHighlightCoordinator coordinator;
+        private readonly PlacementRegister register;
+        private readonly Camera playerCamera;
 
+        private bool placementsVisible;
+        
         private bool mouseStartValid;
         private Vector3 mouseStart;
         private Vector3 mouseEnd;
@@ -49,17 +50,40 @@ namespace KaizerWald
             {
                 if(!GetMouseEnd(context.ReadValue<Vector2>())) return;
                 
-                mouseDistance = mouseStart.DistanceTo(mouseEnd); //Vector3.Distance(mouseEnd, mouseStart);
+                mouseDistance = mouseStart.DistanceTo(mouseEnd);
+
+                //We want to rotate when visibles
+                if (placementsVisible)
+                {
+                    PlaceRegiments();
+                    return;
+                }
+                
                 //Guard Clause: drag mouse long enough
                 if (mouseDistance < coordinator.SelectedRegiments[0].RegimentClass.SpaceSizeBetweenUnit) return;
                 PlaceRegiments();
             }
             else
             {
-                mouseDistance = 0;
-                register.OnClearHighlight();
+                coordinator.DispatchEvent(register);
+                OnMouseReleased();
+                placementsVisible = false;
                 //Clear All renderer In final version
             }
+        }
+
+        private void OnMouseReleased()
+        {
+            for (int i = 0; i < coordinator.SelectedRegiments.Count; i++)
+            {
+                coordinator.SelectedRegiments[i].SetMoving(true);
+                if (register.MovingRegiments.Contains(coordinator.SelectedRegiments[i])) continue;
+                register.MovingRegiments.Add(coordinator.SelectedRegiments[i]);
+            }
+            
+            mouseDistance = 0;
+            register.OnClearHighlight();
+            placementsVisible = false;
         }
 
         private bool GetMouseStart(Vector2 mouseInput)
@@ -96,18 +120,18 @@ namespace KaizerWald
 
         public void PlaceRegiments()
         {
-            //if (float.IsPositiveInfinity(mouseDistance)) return;
-            
-            //Debug.Log($"values: d:{mouseDistance} mouse: {mouseEnd} bool: {Approximately(mouseDistance, 0) || mouseEnd == Vector3.negativeInfinity}");
             float minRegimentsFormationSize = MinSizeFormation();
             //First Guard Clause : mouse goes far enough
-            if (mouseDistance <= minRegimentsFormationSize/2f) return;
-            
-            for (int i = 0; i < coordinator.SelectedRegiments.Count; i++)
+            //if (mouseDistance <= minRegimentsFormationSize/2f) return;
+            if (!placementsVisible)
             {
-                register.OnEnableHighlight(coordinator.SelectedRegiments[i]);
+                for (int i = 0; i < coordinator.SelectedRegiments.Count; i++)
+                {
+                    register.OnEnableHighlight(coordinator.SelectedRegiments[i]);
+                }
+                placementsVisible = true;
             }
-            
+
             //Second Guard Clause : Check if we add something
             int numUnitToAdd = (int)(mouseDistance - minRegimentsFormationSize) / coordinator.SelectedRegiments.Count;
             numUnitToAdd = Max(0, numUnitToAdd);

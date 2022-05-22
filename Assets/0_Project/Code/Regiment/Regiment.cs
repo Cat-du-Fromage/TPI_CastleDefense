@@ -26,6 +26,9 @@ namespace KaizerWald
         public int CurrentLineFormation { get; private set; }
         public RegimentClass RegimentClass { get; private set; }
         
+        //Mouvement
+        public bool IsMoving { get; private set; }
+        public void SetMoving(bool state) => IsMoving = state;
         //Shoot behaviour
         public bool IsPlayer { get; set; }
         public float regimentShootRange = 10f;

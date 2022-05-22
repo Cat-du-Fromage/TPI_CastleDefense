@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace KaizerWald
@@ -9,15 +10,16 @@ namespace KaizerWald
     {
         [field:SerializeField] private GameObject prefabPreselection;
         [field:SerializeField] public GameObject PrefabSelection { get; private set; }
+        public PlayerControls Controls { get; private set; }
+        
         public List<Regiment> Regiments { get; set; }
         public IHighlightRegister[] Registers { get; set; }
-        public PreselectionRegister PreselectionRegister { get; private set; }
-        
+
         public PreselectionSystem PreselectionSystem { get; private set; }
         public SelectionSystem SelectionSystem { get; private set; }
-        
         public PlacementSystem PlacementSystem { get; private set; }
-        public PlayerControls Controls { get; private set; }
+
+        private SquarePreselection preselectionSquare;
 
         private void Awake()
         {
@@ -25,14 +27,23 @@ namespace KaizerWald
             
             Regiments = GetComponent<RegimentFactory>().CreateRegiments();
             
-            PreselectionRegister = new PreselectionRegister(prefabPreselection, Regiments);
+            PreselectionSystem = new PreselectionSystem(this, prefabPreselection);
             SelectionSystem = new SelectionSystem(this, PrefabSelection);
             PlacementSystem = new PlacementSystem(this, null); //null...: not normal, need refactor
         }
 
         private void Start()
         {
-            Registers = new IHighlightRegister[] {PreselectionRegister, SelectionSystem.Register, PlacementSystem.Register};
+            if (!TryGetComponent(out preselectionSquare)) preselectionSquare = gameObject.AddComponent<SquarePreselection>();
+            Registers = new IHighlightRegister[] {PreselectionSystem.Register, SelectionSystem.Register, PlacementSystem.Register};
+        }
+
+        private void OnDestroy()
+        {
+            for (int i = 0; i < Registers.Length; i++)
+            {
+                ((HighlightBehaviour)Registers[i]).DisposeAllTransformAccessArrays();
+            }
         }
     }
 }

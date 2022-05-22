@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Jobs;
 
 namespace KaizerWald
 {
     public interface IHighlightRegister
     {
         public GameObject Prefab { get; }
-        public Dictionary<int, IHighlightable[]> Records { get; set; }
+        public Dictionary<int, IHighlightable[]> Records { get; }
+        public Dictionary<int, TransformAccessArray> TransformAccessArrays { get; }
 
         public void PopulateRecords<T>(int regimentID, Transform[] units, GameObject prefab = null)
         where T: IHighlightable

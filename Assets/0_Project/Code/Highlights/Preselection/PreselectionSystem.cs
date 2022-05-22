@@ -9,14 +9,13 @@ namespace KaizerWald
         public IHighlightRegister Register { get; }
         public IHighlightCoordinator Coordinator { get; }
         
-        private PreselectionController controller;
+        public PreselectionController Controller{ get; }
         
         public PreselectionSystem(IHighlightCoordinator coordinator, GameObject prefab)
         {
-            //coordinator.Controls.Placement.Enable();
             Coordinator = coordinator;
-            Register = new PlacementRegister(this, prefab, coordinator.Regiments);
-            //controller = new PlacementController(coordinator, (PlacementRegister)Register);
+            Register = new PreselectionRegister(this, prefab, coordinator.Regiments);
+            Controller = new PreselectionController(coordinator, (PreselectionRegister)Register);
         }
     }
 }

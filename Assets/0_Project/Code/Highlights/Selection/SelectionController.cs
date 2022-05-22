@@ -9,10 +9,10 @@ namespace KaizerWald
 {
     public class SelectionController: ISelectionActions
     {
-        private ButtonControl controlKey;
+        private readonly ButtonControl controlKey;
         
-        private IHighlightCoordinator coordinator;
-        private SelectionRegister register;
+        private readonly IHighlightCoordinator coordinator;
+        private readonly SelectionRegister register;
         
         public SelectionController(IHighlightCoordinator highlightCoordinator, SelectionRegister selectionRegister)
         {

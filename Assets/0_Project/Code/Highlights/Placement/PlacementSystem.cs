@@ -12,7 +12,6 @@ namespace KaizerWald
         
         public PlacementSystem(IHighlightCoordinator coordinator, GameObject prefab)
         {
-            //coordinator.Controls.Placement.Enable();
             Coordinator = coordinator;
             Register = new PlacementRegister(this, prefab, coordinator.Regiments);
             controller = new PlacementController(coordinator, (PlacementRegister)Register);

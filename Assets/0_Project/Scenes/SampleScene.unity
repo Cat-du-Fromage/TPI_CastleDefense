@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 988505843}
   - component: {fileID: 988505842}
   - component: {fileID: 988505846}
+  - component: {fileID: 988505847}
   m_Layer: 0
   m_Name: RegimentSystem
   m_TagString: Untagged
@@ -381,11 +382,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 988505841}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17bd9221ba631bd469d7a7ebb2c1461e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ba15180ff66a5d4e9e9b157bc71dd54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RegimentManager: {fileID: 0}
-  PlayerCamera: {fileID: 0}
+--- !u!114 &988505847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988505841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf38fee88e270b4bb9908eea1f59f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1706437426
 PrefabInstance:
   m_ObjectHideFlags: 0

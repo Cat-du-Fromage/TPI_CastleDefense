@@ -6,20 +6,24 @@ using KWUtils;
 
 namespace KaizerWald
 {
-    public sealed class PreselectionRegister : HighlightBehaviour, IHighlightRegister
+    public sealed class PreselectionRegister : HighlightBehaviour//, IHighlightRegister
     {
-        private readonly Vector3 yOffset = new Vector3(0, 0.05f, 0); 
-        public GameObject Prefab { get; set; }
-        public Dictionary<int, IHighlightable[]> Records { get; set; }
+        private readonly IHighlightSystem highlightSystem;
+        
+        private readonly Vector3 yOffset = new Vector3(0, 0.05f, 0);
 
         public List<Regiment> PreselectedRegiments { get; private set; } = new List<Regiment>(2);
 
-        public PreselectionRegister(GameObject prefab, List<Regiment> regiments)
+        public PreselectionRegister(IHighlightSystem system, GameObject prefab, List<Regiment> regiments)
         {
-            Prefab = prefab;
+            highlightSystem = system;
             Records = new Dictionary<int, IHighlightable[]>(regiments.Count);
-            HighlightRegister = this;
+            
             IHighlightRegister registerInterface = this;
+            HighlightRegister = registerInterface;
+            
+            Prefab = prefab;
+
             foreach (Regiment regiment in regiments)
             {
                 registerInterface.RegisterNewRegiment<Preselection>(regiment);

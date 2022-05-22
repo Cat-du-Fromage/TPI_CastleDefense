@@ -5,17 +5,18 @@ using UnityEngine;
 
 namespace KaizerWald
 {
-    public class SelectionSystem
+    public class SelectionSystem : IHighlightSystem
     {
-        public SelectionRegister Register { get; private set; }
+        public IHighlightRegister Register { get; }
+        public IHighlightCoordinator Coordinator { get; }
+
         private SelectionController controller;
         
         public SelectionSystem(IHighlightCoordinator coordinator, GameObject prefab)
         {
+            Coordinator = coordinator;
             Register = new SelectionRegister(prefab, coordinator.Regiments);
-            controller = new SelectionController(coordinator, Register);
+            controller = new SelectionController(coordinator, (SelectionRegister)Register);
         }
-
-
     }
 }
