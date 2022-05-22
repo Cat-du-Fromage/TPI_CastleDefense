@@ -16,5 +16,10 @@ namespace KaizerWald
         {
             Animation = GetComponent<UnitAnimation>();
         }
+
+        public void OnDeath()
+        {
+            
+        }
     }
 }

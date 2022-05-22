@@ -20,10 +20,13 @@ namespace KaizerWald
         public int RegimentID { get; set; }
         public IHighlightCoordinator HighlightCoordinator { get; set; }
 
+        //Buffers
+        private HashSet<int> deadUnits = new HashSet<int>(2);
         public Unit[] Units { get; private set; }
         public Transform[] UnitsTransform { get; set; }
         public TransformAccessArray UnitsTransformAccessArray { get; private set; }
         
+        //Formation State
         public int CurrentLineFormation { get; private set; }
         public RegimentClass RegimentClass { get; private set; }
         
@@ -64,7 +67,13 @@ namespace KaizerWald
             UnitsTransformAccessArray = new TransformAccessArray(UnitsTransform, UnitsTransform.Length);
             SetUpUnitsComponent();
         }
-        
+
+        private void LateUpdate()
+        {
+            if (deadUnits.Count == 0) return;
+            Rearrangement();
+        }
+
         private void OnDestroy()
         {
             if(UnitsTransformAccessArray.isCreated) UnitsTransformAccessArray.Dispose();
@@ -72,6 +81,9 @@ namespace KaizerWald
 
         //==============================================================================================================
 
+        //==============================================================================================================
+        // Setup
+        //==============================================================================================================
         private void SetUpUnitsComponent()
         {
             Units = new Unit[UnitsTransform.Length];
@@ -81,16 +93,43 @@ namespace KaizerWald
             }
         }
         
+        //==============================================================================================================
+        // Methods
+        //==============================================================================================================
+        
         //UNIT REARRANGE HERE!
         public void OnUnitKilled(int unitIndexInRegiment)
         {
+            deadUnits.Add(unitIndexInRegiment);
+
             //Units.Rearrange(unitIndexInRegiment);
-            HighlightCoordinator.OnUnitKilled(RegimentID, unitIndexInRegiment);
+            //HighlightCoordinator.OnUnitKilled(RegimentID, unitIndexInRegiment);
             //Faire le ménage ICI
-            
+
             //Placer l'algorithme ici
-            
+
             //Envoyer le message au IScrivener
+        }
+
+        public void Rearrangement()
+        {
+            
+            deadUnits.Clear();
+
+            int numLine = Mathf.CeilToInt(Units.Length / (float)CurrentLineFormation);
+
+            int[] deadPerLine = new int[numLine];
+            
+            foreach (int unitIndex in deadUnits)
+            {
+                (int x, int y) = unitIndex.GetXY(CurrentLineFormation);
+                deadPerLine[y]++;
+            }
+            
+            for (int i = 0; i < numLine; i++)
+            {
+                
+            }
         }
     }
 }
