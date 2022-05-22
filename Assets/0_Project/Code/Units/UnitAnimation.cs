@@ -46,6 +46,10 @@ public class UnitAnimation : MonoBehaviour
         if (Test) InitIdleRandom(1);
     }
 
+    public void SetSpeed(float value)
+    {
+        animator.SetFloat(animIDSpeed, value);
+    }
 
     private void AssignAnimationIDs()
     {

@@ -145,7 +145,7 @@ namespace KaizerWald
             {
                 //Gather regimentData
                 RegimentClass regimentClass = coordinator.SelectedRegiments[i].RegimentClass;
-                int currentNumUnits = coordinator.SelectedRegiments[i].Units.Length;
+                int currentNumUnits = coordinator.SelectedRegiments[i].UnitsTransform.Length;
                 float unitSpaceSize = regimentClass.SpaceSizeBetweenUnit;
                 
                 //OFFSET REGIMENT?

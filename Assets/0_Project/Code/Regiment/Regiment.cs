@@ -20,7 +20,8 @@ namespace KaizerWald
         public int RegimentID { get; set; }
         public IHighlightCoordinator HighlightCoordinator { get; set; }
 
-        public Transform[] Units { get; set; }
+        public Unit[] Units { get; private set; }
+        public Transform[] UnitsTransform { get; set; }
         public TransformAccessArray UnitsTransformAccessArray { get; private set; }
         
         public int CurrentLineFormation { get; private set; }
@@ -28,7 +29,7 @@ namespace KaizerWald
         
         //Mouvement
         public bool IsMoving { get; private set; }
-        public void SetMoving(bool state) => IsMoving = state;
+
         //Shoot behaviour
         public bool IsPlayer { get; set; }
         public float regimentShootRange = 10f;
@@ -37,7 +38,16 @@ namespace KaizerWald
         //==============================================================================================================
         // Private Setters
         //==============================================================================================================
-        
+        public void SetMoving(bool state)
+        {
+            IsMoving = state;
+            float speed = state ? 6 : 0;
+            for (int i = 0; i < Units.Length; i++)
+            {
+                Units[i].Animation.SetSpeed(speed);
+            }
+        }
+
         public void SetRegimentClass(RegimentClass regimentClass)
         {
             RegimentClass = regimentClass;
@@ -51,22 +61,10 @@ namespace KaizerWald
         
         private void Start()
         {
-            UnitsTransformAccessArray = new TransformAccessArray(Units, Units.Length);
+            UnitsTransformAccessArray = new TransformAccessArray(UnitsTransform, UnitsTransform.Length);
+            SetUpUnitsComponent();
         }
-
-        private void Update()
-        {
-            //throw new NotImplementedException();
-        }
-
-        private void FixedUpdate()
-        {
-            //if (!ShootingBehaviour.IsTargetInRange(this, out RaycastHit hit)) return;
-            //Debug.Log("found");
-            //Debug.Log(hit.transform.name);
-            //currentTarget = hit.transform.GetComponent<Unit>().RegimentAttach;
-        }
-
+        
         private void OnDestroy()
         {
             if(UnitsTransformAccessArray.isCreated) UnitsTransformAccessArray.Dispose();
@@ -74,7 +72,14 @@ namespace KaizerWald
 
         //==============================================================================================================
 
-        
+        private void SetUpUnitsComponent()
+        {
+            Units = new Unit[UnitsTransform.Length];
+            for (int i = 0; i < UnitsTransform.Length; i++)
+            {
+                Units[i] = UnitsTransform[i].GetComponent<Unit>();
+            }
+        }
         
         //UNIT REARRANGE HERE!
         public void OnUnitKilled(int unitIndexInRegiment)

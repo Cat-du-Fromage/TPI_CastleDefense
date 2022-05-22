@@ -62,7 +62,7 @@ namespace KaizerWald
                     regiment.IsPlayer = IsForPlayerRegiment; 
                     //==================================================================================================
                     
-                    regiment.Units = unitFactory.CreateRegimentsUnit(regiment).ToArray();
+                    regiment.UnitsTransform = unitFactory.CreateRegimentsUnit(regiment).ToArray();
                 }
 
                 previousRegimentClass = currentRegimentClass;

@@ -54,9 +54,9 @@ namespace KaizerWald
             
             for (int i = 0; i < highlights.Length; i++)
             {
-                Vector3 unitPosition = regiment.Units[i].position + yOffset;
+                Vector3 unitPosition = regiment.UnitsTransform[i].position + yOffset;
                 
-                if (regiment.Units[i].position.xz() != highlights[i].HighlightTransform.position.xz())
+                if (regiment.UnitsTransform[i].position.xz() != highlights[i].HighlightTransform.position.xz())
                 {
                     highlights[i].HighlightTransform.position = unitPosition;
                 }

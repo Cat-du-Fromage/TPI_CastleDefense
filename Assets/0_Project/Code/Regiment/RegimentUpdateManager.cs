@@ -53,7 +53,7 @@ namespace KaizerWald
                 
                 JMoveEnemies job = new JMoveEnemies
                 {
-                    Speed = 1,
+                    Speed = 4,
                     DeltaTime = Time.deltaTime,
                     GoalsRotation = rotations,
                     GoalsPosition = positions,
@@ -83,14 +83,25 @@ namespace KaizerWald
                 TransformAccessArray unitAccessArray = coordinator.MovingRegiments[i].UnitsTransformAccessArray;
 
                 int numUnitsReach = 0;
-                for (int j = 0; j < coordinator.MovingRegiments[i].Units.Length; j++)
+                for (int j = 0; j < coordinator.MovingRegiments[i].UnitsTransform.Length; j++)
                 {
                     float distance = goalAccessArray[j].position.Flat().DistanceTo(unitAccessArray[j].position.Flat());
+                    distance = math.abs(distance);
+                    
+                    if (distance < 1f)
+                    {
+                        //=============================================================
+                        //TEMPORARY
+                        coordinator.MovingRegiments[i].Units[j].Animation.SetSpeed(0);
+                        //TEMPORARY
+                        //=============================================================
+                    }
+                    
                     if(distance > 0.1f) continue;
                     numUnitsReach += 1;
                 }
                 
-                if (numUnitsReach != coordinator.MovingRegiments[i].Units.Length) continue;
+                if (numUnitsReach != coordinator.MovingRegiments[i].UnitsTransform.Length) continue;
                 coordinator.MovingRegiments[i].SetMoving(false);
                 coordinator.MovingRegiments.Remove(coordinator.MovingRegiments[i]);
             }
@@ -111,6 +122,8 @@ namespace KaizerWald
 
         public void Execute(int index, TransformAccess transform)
         {
+            if (transform.position.DistanceTo(GoalsPosition[index]) < 0.1f) return;
+            
             //Rotation
             
             quaternion rotation = math.slerp(transform.rotation, GoalsRotation[index], DeltaTime * Speed);

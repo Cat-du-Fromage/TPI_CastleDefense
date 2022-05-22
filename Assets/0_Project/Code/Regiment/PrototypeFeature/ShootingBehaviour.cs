@@ -11,10 +11,10 @@ namespace KaizerWald
     {
         public static bool IsTargetInRange(Regiment r, out RaycastHit hit)
         {
-            Vector3 centerFirstLineRegiment = (r.Units[0].position + r.Units[r.CurrentLineFormation].position) / 2f;
-            Vector3 directionUnit = r.Units[0].position.DirectionTo(r.Units[r.CurrentLineFormation].position).normalized;
+            Vector3 centerFirstLineRegiment = (r.UnitsTransform[0].position + r.UnitsTransform[r.CurrentLineFormation].position) / 2f;
+            Vector3 directionUnit = r.UnitsTransform[0].position.DirectionTo(r.UnitsTransform[r.CurrentLineFormation].position).normalized;
 
-            float lineSize = r.Units[0].position.DistanceTo(r.Units[r.CurrentLineFormation].position);
+            float lineSize = r.UnitsTransform[0].position.DistanceTo(r.UnitsTransform[r.CurrentLineFormation].position);
             //Bounds rectangleRange = new Bounds(Vector3.Cross(directionUnit, Vector3.up), )
                 
             NativeArray<RaycastHit> results = new (1, Allocator.TempJob);

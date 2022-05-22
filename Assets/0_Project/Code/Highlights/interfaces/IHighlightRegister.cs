@@ -28,8 +28,8 @@ namespace KaizerWald
         public void RegisterNewRegiment<T>(Regiment regiment, GameObject prefab = null)
         where T: IHighlightable
         {
-            Records.TryAdd(regiment.RegimentID, new IHighlightable[regiment.Units.Length]);
-            PopulateRecords<T>(regiment.RegimentID, regiment.Units, prefab);
+            Records.TryAdd(regiment.RegimentID, new IHighlightable[regiment.UnitsTransform.Length]);
+            PopulateRecords<T>(regiment.RegimentID, regiment.UnitsTransform, prefab);
         }
 
         public void OnUnitUpdate(int regimentID, int unitIndexInRegiment)

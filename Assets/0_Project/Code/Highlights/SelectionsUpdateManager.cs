@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using KWUtils;
 using Unity.Collections;
 using Unity.Jobs;
+using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Jobs;
 using static KWUtils.NativeCollectionExt;
@@ -14,8 +15,7 @@ namespace KaizerWald
     {
         private IHighlightCoordinator coordinator;
         private RegimentManager regimentManager;
-
-        //private NativeList<JobHandle> preselectJobHandles;
+        
         private NativeList<JobHandle> selectJobHandles;
         
         private void Awake()
@@ -31,7 +31,7 @@ namespace KaizerWald
 
         private void Update()
         {
-            if(coordinator.SelectedRegiments.Count == 0) return;
+            if (coordinator.SelectedRegiments.Count == 0) return;
             if (coordinator.MovingRegiments.Count == 0) return;
             
             selectJobHandles = new NativeList<JobHandle>(coordinator.MovingRegiments.Count, Allocator.Temp);
@@ -41,62 +41,40 @@ namespace KaizerWald
             {
                 bool isSelect = coordinator.MovingRegiments[i].IsSelected;
                 if (!isSelect) continue;
-                
                 TransformAccessArray unitAccessArray = coordinator.MovingRegiments[i].UnitsTransformAccessArray;
-
-                NativeArray<Quaternion> rotations = AllocNtvAry<Quaternion>(unitAccessArray.length);
-                NativeArray<Vector3> positions = AllocNtvAry<Vector3>(unitAccessArray.length);
                 
-                for (int j = 0; j < unitAccessArray.length; j++)
-                {
-                    rotations[j] = unitAccessArray[j].rotation;
-                    positions[j] = unitAccessArray[j].position;
-                }
-
-                MoveSelections(i, realIndex, rotations, positions);
+                JobHandle arrayJobHandle = GetPositionAndRotation(unitAccessArray, out NativeArray<Vector3> positions, out NativeArray<Quaternion> rotations);
+                MoveSelections(i, realIndex, rotations, positions, arrayJobHandle);
 
                 rotations.Dispose(selectJobHandles[realIndex]);
                 positions.Dispose(selectJobHandles[realIndex]);
-                realIndex += 1;
+                realIndex++;
             }
             
             JobHandle.ScheduleBatchedJobs();
         }
         
-        private void MoveSelections(int index, int realIndex, in NativeArray<Quaternion> rot, in NativeArray<Vector3> pos)
+        private JobHandle GetPositionAndRotation(TransformAccessArray unitAccessArray, out NativeArray<Vector3> positions, out NativeArray<Quaternion> rotations)
         {
-            JHighlightsMove selectJob = new JHighlightsMove
-            {
-                Rotations = rot,
-                Positions = pos,
-            };
+            positions = AllocNtvAry<Vector3>(unitAccessArray.length);
+            rotations = AllocNtvAry<Quaternion>(unitAccessArray.length);
             
-            JobHandle dependency;
-            if (realIndex == 0 || selectJobHandles.Length == 0)
-                dependency = default;
-            else
-                dependency = selectJobHandles[realIndex - 1];
+            //Get Position And Rotation
+            JGetPositionAndRotation job = new JGetPositionAndRotation(positions, rotations);
+            return job.ScheduleReadOnly(unitAccessArray, JobsUtility.JobWorkerCount - 1);
+        }
+
+        private void MoveSelections(int index, int realIndex, in NativeArray<Quaternion> rot, in NativeArray<Vector3> pos, JobHandle arraysD)
+        {
+            JHighlightsMove selectJob = new JHighlightsMove(pos, rot);
+                
+            JobHandle dependency = realIndex == 0 ? default : selectJobHandles[realIndex - 1];
+            JobHandle combineDependency = JobHandle.CombineDependencies(dependency, arraysD);
             
             TransformAccessArray selectAccessArray =
                 ((SelectionRegister)coordinator.SelectionSystem.Register).TransformAccessArrays[coordinator.MovingRegiments[index].RegimentID];
             
-            selectJobHandles.Add(selectJob.Schedule(selectAccessArray, dependency));
-        }
-
-    }
-
-    public struct JHighlightsMove : IJobParallelForTransform
-    {
-        [NativeDisableParallelForRestriction]
-        [ReadOnly] public NativeArray<Quaternion> Rotations;
-        
-        [NativeDisableParallelForRestriction]
-        [ReadOnly] public NativeArray<Vector3> Positions;
-        
-        public void Execute(int index, TransformAccess transform)
-        {
-            transform.rotation = Rotations[index];
-            transform.position = new Vector3(Positions[index].x, transform.position.y, Positions[index].z);
+            selectJobHandles.Add(selectJob.Schedule(selectAccessArray, combineDependency));
         }
     }
 }

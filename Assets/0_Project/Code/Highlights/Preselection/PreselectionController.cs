@@ -163,11 +163,11 @@ namespace KaizerWald
 
             bool CheckUnitsInRectangleBounds(Regiment regiment)
             {
-                int numUnits = regiment.Units.Length;
+                int numUnits = regiment.UnitsTransform.Length;
                 for (int index = 0; index < numUnits; index++)
                 {
-                    if (regiment.Units[index] == null) continue;
-                    float3 unitPosition = regiment.Units[index].transform.position;
+                    if (regiment.UnitsTransform[index] == null) continue;
+                    float3 unitPosition = regiment.UnitsTransform[index].transform.position;
                     float3 unitPositionInRect = unitPosition.WorldToViewportPoint(cameraData);
                     if (!selectionBounds.Contains(unitPositionInRect)) continue;
                     return true;
