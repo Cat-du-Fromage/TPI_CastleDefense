@@ -66,6 +66,11 @@ namespace KaizerWald
         {
             UnitsTransformAccessArray = new TransformAccessArray(UnitsTransform, UnitsTransform.Length);
             SetUpUnitsComponent();
+            
+            //====================================================================================================================
+            //TEMPORARY SHOOTING
+            gameObject.AddComponent<ShootManager>();
+            //====================================================================================================================
         }
 
         private void LateUpdate()
