@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 using static KWUtils.KWmath;
@@ -70,14 +71,14 @@ namespace KaizerWald
 
         private void OnCollisionEnter(Collision other)
         {
-            
-            Hit = other.gameObject.layer == hitMask.value;
+            Hit = other.gameObject.layer == math.floorlog2( hitMask.value);
+            //Debug.Log($"hitted {other.gameObject.layer}; value {math.floorlog2( hitMask.value)}");
             if (Hit)
             {
+                
+                other.transform.GetComponent<Unit>().OnDeath();
                 Destroy(gameObject);
             }
-            other.transform.TryGetComponent(out enemyHit);
-            
         }
     }
 }

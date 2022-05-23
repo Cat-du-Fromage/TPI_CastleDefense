@@ -116,6 +116,11 @@ namespace KaizerWald
             animator.SetBool(animIDIsShooting, shoot);
         }
 
+        public void SetDead()
+        {
+            animator.SetTrigger(animTriggerIDDeath);
+        }
+
         private void PlayMuzzleFlash()
         {
             //ALso create Bullet

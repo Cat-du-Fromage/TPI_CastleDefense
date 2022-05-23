@@ -10,6 +10,8 @@ namespace KaizerWald
 {
     public partial class ShootManager : MonoBehaviour
     {
+        public bool debug;
+        
         private ShootSystem shootSystem;
         private GameObject bulletPrefab;
         
@@ -35,6 +37,7 @@ namespace KaizerWald
             bulletPrefab = shootSystem.bullet;
 
             ShootSound = gameObject.AddComponent<AudioSource>();
+            ShootSound.spatialBlend = 1f;
         }
 
         private void Start()
@@ -46,14 +49,13 @@ namespace KaizerWald
         {
             if (regiment.IsMoving)
             {
-                if (!IsFiring) return;
+                //if (!IsFiring) return;
                 ShootTarget(false);
                 HasTarget = false;
             }
             else if (!HasTarget)
             {
-                if(IsFiring)
-                    ShootTarget(false);
+                if(IsFiring) ShootTarget(false);
                 GetTarget();
             }
             else if(HasTarget)
@@ -102,13 +104,12 @@ namespace KaizerWald
         {
             for (int i = 0; i < results.Length; i++)
             {
-                if (results[i].collider != null)
+                if (results[i].transform != null)
                 {
                     HasTarget = true;
                     return results[i].transform.GetComponent<Unit>().RegimentAttach;
                 }
             }
-
             HasTarget = false;
             return null;
         }
@@ -117,11 +118,19 @@ namespace KaizerWald
         {
             results = new (regiment.CurrentLineFormation, Allocator.TempJob);
             commands = new (regiment.CurrentLineFormation, Allocator.TempJob);
+            
             for (int i = 0; i < regiment.CurrentLineFormation; i++)
             {
                 Vector3 origin = regiment.UnitsTransform[i].position + Vector3.up;
+                
                 Vector3 direction = regiment.UnitsTransform[i].forward;
-                commands[0] = new SpherecastCommand(origin, 10f,direction, 20f,HitMask);
+                
+                if (debug)
+                {
+                    Debug.DrawRay(origin, direction * 20f);
+                }
+
+                commands[0] = new SpherecastCommand(origin, 5f,direction, 20f,HitMask);
             }
             targetHandle = SpherecastCommand.ScheduleBatch(commands, results, regiment.CurrentLineFormation, default(JobHandle));
         }

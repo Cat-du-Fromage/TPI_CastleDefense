@@ -12,6 +12,8 @@ namespace KaizerWald
         //public void SetRegiment(IRegiment assignedRegiment) => Regiment = assignedRegiment;
         public UnitAnimation Animation { get; private set; }
 
+        public bool IsDead { get; private set; }
+
         private void Awake()
         {
             Animation = GetComponent<UnitAnimation>();
@@ -19,7 +21,9 @@ namespace KaizerWald
 
         public void OnDeath()
         {
-            
+            if (IsDead) return;
+            Animation.SetDead();
+            IsDead = true;
         }
     }
 }
