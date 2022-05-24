@@ -11,16 +11,19 @@ namespace KaizerWald
         {
             RegimentClass regimentClass = regiment.RegimentClass;
             Vector3 regimentPosition = regiment.transform.position;
-
+            
             float unitSizeX = regimentClass.UnitSize.x;
 
             List<Transform> units = new(regimentClass.BaseNumUnits);
+
             for (int i = 0; i < regimentClass.BaseNumUnits; i++)
             {
-                Vector3 positionInRegiment = GetPositionInRegiment(i);
+                Vector3 positionInRegiment = GetPositionInRegiment(i, regiment.IsPlayer);
                 GameObject newUnit = Instantiate(regimentClass.PrefabUnit, positionInRegiment, regiment.transform.rotation);
                 newUnit.name = $"{regimentClass.PrefabUnit.name}_{i}";
+
                 units.Add(InitializeUnitComponent(newUnit, i).transform);
+                
                 //==================================================================================================
                 //TEMP FOR AI
                 newUnit.layer = regiment.IsPlayer ? LayerMask.NameToLayer("Player") : LayerMask.NameToLayer("Enemy");
@@ -38,15 +41,18 @@ namespace KaizerWald
             }
 
             //Internal Methods
-            Vector3 GetPositionInRegiment(int index)
+            Vector3 GetPositionInRegiment(int index, bool player)
             {
+                int row = player ? regimentClass.MinRow : regimentClass.BaseNumUnits;
+                int column = player ? regimentClass.MinColumn : 1;
+                
                 //Coord according to index
-                int z = index / regimentClass.MinRow;
-                int x = index - (z * regimentClass.MinRow);
+                int z = index / row;
+                int x = index - (z * row);
                 //Offset to place regiment in the center of the mass
-                float offsetX = regimentPosition.x - GetOffset(regimentClass.MinRow);
-                float offsetZ = regimentPosition.z - GetOffset(regimentClass.MinColumn);
-                return new Vector3(x * unitSizeX + offsetX, 0, z * unitSizeX + offsetZ);
+                float offsetX = regimentPosition.x - GetOffset(row);
+                float offsetZ = regimentPosition.z - GetOffset(column);
+                return new Vector3(x * unitSizeX + offsetX, 0, -(z * unitSizeX) + offsetZ);
             }
 
             float GetOffset(int row)

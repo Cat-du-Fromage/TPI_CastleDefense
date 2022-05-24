@@ -93,8 +93,10 @@ namespace KaizerWald
 
             animationsSpeed = rand.NextFloat(6, 10) / 10f;
             animator.SetFloat(animIDAnimationsSpeed, animationsSpeed);
+            
+            animator.SetInteger(animIDDeathIndex, Random.CreateFromIndex((uint)index).NextInt(0,3));
         }
-
+/*
         private void Update()
         {
             if (Keyboard.current.eKey.wasPressedThisFrame)
@@ -107,7 +109,7 @@ namespace KaizerWald
                 animator.SetBool(animIDIsShooting, shoot);
             }
         }
-
+*/
         public void SetFire(bool state)
         {
             aim = state;
@@ -118,13 +120,14 @@ namespace KaizerWald
 
         public void SetDead()
         {
+            
             animator.SetTrigger(animTriggerIDDeath);
         }
 
         private void PlayMuzzleFlash()
         {
             //ALso create Bullet
-            shootManager.ShootBullet(transform);
+            shootManager.ShootBullet(unitAttach);
             MuzzleFlash.Play();
         }
     }

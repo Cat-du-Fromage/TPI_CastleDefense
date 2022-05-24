@@ -54,7 +54,11 @@ namespace KaizerWald
         public void SetRegimentClass(RegimentClass regimentClass)
         {
             RegimentClass = regimentClass;
-            CurrentLineFormation = RegimentClass.MinRow;
+            //==================================================================================================
+            //TEMP FOR AI
+            CurrentLineFormation = IsPlayer ? RegimentClass.MinRow : RegimentClass.BaseNumUnits;
+            //==================================================================================================
+            //CurrentLineFormation = RegimentClass.MinRow;
         }
         public void SetCurrentLineFormation(int unitPerLine) => CurrentLineFormation = unitPerLine;
 

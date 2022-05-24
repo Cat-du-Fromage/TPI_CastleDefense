@@ -74,7 +74,13 @@ namespace KaizerWald
 
         private Regiment InstantiateRegiment(RegimentClass regimentClass, int index, float offsetPosition)
         {
-            Vector3 position = transform.position + offsetPosition * Vector3.right;
+            //==================================================================================================
+            //TEMP FOR AI
+            Vector3 center = GetComponent<RegimentManager>().transform.position;
+            //==================================================================================================
+            
+            
+            Vector3 position = center + offsetPosition * Vector3.right;
             
 
             GameObject newRegiment = new($"{regimentClass.name}", typeof(Regiment));
@@ -84,15 +90,20 @@ namespace KaizerWald
             regimentComponent.SetRegimentClass(regimentClass);
             regimentComponent.RegimentID = newRegiment.GetInstanceID();
             newRegiment.name = $"{regimentClass.name}_{regimentComponent.RegimentID}";
+            
 
             return regimentComponent;
         }
 
         private float GetOffset(RegimentClass regimentClass, int index)
         {
+            //==================================================================================================
+            //TEMP FOR AI
+            int row = IsForPlayerRegiment ? regimentClass.MinRow : regimentClass.BaseNumUnits;
+            //==================================================================================================
             //DISTANCE from regiment to an other IS NOT divide by 2 !!
             if (index == 0) return 0;
-            float offset = (regimentClass.MinRow * regimentClass.UnitSize.x + regimentClass.SpaceBetweenUnits);
+            float offset = (row * regimentClass.UnitSize.x + regimentClass.SpaceBetweenUnits);
             return offset;
         }
     }

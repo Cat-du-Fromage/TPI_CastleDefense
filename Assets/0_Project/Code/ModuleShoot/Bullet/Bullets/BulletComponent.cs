@@ -75,8 +75,9 @@ namespace KaizerWald
             //Debug.Log($"hitted {other.gameObject.layer}; value {math.floorlog2( hitMask.value)}");
             if (Hit)
             {
-                
-                other.transform.GetComponent<Unit>().OnDeath();
+                Unit unit = other.transform.GetComponent<Unit>();
+                if (unit.IsDead) return;
+                unit.OnDeath();
                 Destroy(gameObject);
             }
         }

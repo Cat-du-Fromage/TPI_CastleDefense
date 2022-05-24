@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using KWUtils;
 using Unity.Collections;
 using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace KaizerWald
 {
@@ -14,9 +16,7 @@ namespace KaizerWald
         
         private ShootSystem shootSystem;
         private GameObject bulletPrefab;
-        
-        
-        
+
         [field:SerializeField] private Regiment regiment;
         [field:SerializeField] public Regiment TargetRegiment { get; private set; }
         [field:SerializeField] public LayerMask HitMask { get; private set; }
@@ -49,7 +49,6 @@ namespace KaizerWald
         {
             if (regiment.IsMoving)
             {
-                //if (!IsFiring) return;
                 ShootTarget(false);
                 HasTarget = false;
             }
@@ -76,11 +75,26 @@ namespace KaizerWald
             commands.Dispose();
         }
 
-        public void ShootBullet(Transform unitTransform)
+        public void ShootBullet(Unit unit)
         {
-            Vector3 pos = unitTransform.position + Vector3.up + unitTransform.forward;
+            Transform unitTransform = unit.transform;
+            Vector3 unitPosition = unitTransform.position;
+            
+            int2 xTarget = unit.IndexInRegiment.GetXY2(TargetRegiment.CurrentLineFormation);
+
+            Vector3 unitTargetPosition = TargetRegiment.Units[xTarget.x].transform.position + new Vector3(0, 0.5f, 0);
+            
+            Vector3 dir = (unitTargetPosition - unitPosition).Flat().normalized;
+            dir += Random.insideUnitSphere * 0.1f;
+            
+            Vector3 pos = unitPosition + Vector3.up + unitTransform.forward;
+            
+#if UNITY_EDITOR
+            if (debug) Debug.DrawRay(pos, dir * 20f, Color.magenta, 3f);
+#endif     
+            
             GameObject bullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
-            bullet.GetComponent<BulletComponent>().Shoot(pos,unitTransform.forward, HitMask);
+            bullet.GetComponent<BulletComponent>().Shoot(pos,dir, HitMask);
 
             if (ShootSound.isPlaying) return;
             if(transform.position.DistanceTo(regiment.Units[regiment.Units.Length / 2].transform.position) > 5)
@@ -104,11 +118,10 @@ namespace KaizerWald
         {
             for (int i = 0; i < results.Length; i++)
             {
-                if (results[i].transform != null)
-                {
-                    HasTarget = true;
-                    return results[i].transform.GetComponent<Unit>().RegimentAttach;
-                }
+                if (results[i].transform == null) continue;
+                if (!results[i].transform.TryGetComponent(out Unit unit)) continue;
+                HasTarget = true;
+                return unit.RegimentAttach;
             }
             HasTarget = false;
             return null;
@@ -118,21 +131,23 @@ namespace KaizerWald
         {
             results = new (regiment.CurrentLineFormation, Allocator.TempJob);
             commands = new (regiment.CurrentLineFormation, Allocator.TempJob);
+
+            Vector3 offset = new Vector3(0, 0.5f, 0);
             
             for (int i = 0; i < regiment.CurrentLineFormation; i++)
             {
-                Vector3 origin = regiment.UnitsTransform[i].position + Vector3.up;
+                Vector3 origin = regiment.UnitsTransform[i].position + offset + regiment.UnitsTransform[i].forward;
                 
                 Vector3 direction = regiment.UnitsTransform[i].forward;
                 
-                if (debug)
-                {
-                    Debug.DrawRay(origin, direction * 20f);
-                }
+#if UNITY_EDITOR
+                if (debug) Debug.DrawRay(origin, direction * 20f);
+#endif
+                
 
-                commands[0] = new SpherecastCommand(origin, 5f,direction, 20f,HitMask);
+                commands[i] = new SpherecastCommand(origin, 2f,direction, 20f,HitMask);
             }
-            targetHandle = SpherecastCommand.ScheduleBatch(commands, results, regiment.CurrentLineFormation, default(JobHandle));
+            targetHandle = SpherecastCommand.ScheduleBatch(commands, results, regiment.CurrentLineFormation);
         }
 
         

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.026700953, g: 0.29866886, b: 0.49627915, a: 1}
+  m_IndirectSpecularColor: {r: 0.026566118, g: 0.29867774, b: 0.49624193, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -368,7 +368,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 988505841}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 53.8, y: 0, z: 113.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -664,7 +664,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1819718773}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 57.4, y: 0, z: 16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -687,6 +687,8 @@ MonoBehaviour:
   CreationOrders:
   - Number: 1
     RegimentClass: {fileID: 11400000, guid: 4d0fd65f197628145aec9888fa9209f2, type: 2}
+  - Number: 1
+    RegimentClass: {fileID: 11400000, guid: c5e39402e78068b4f92d5cad03d8e454, type: 2}
 --- !u!114 &1819718776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -727,6 +729,8 @@ GameObject:
   - component: {fileID: 2056201408}
   - component: {fileID: 2056201407}
   - component: {fileID: 2056201406}
+  - component: {fileID: 2056201410}
+  - component: {fileID: 2056201411}
   m_Layer: 8
   m_Name: Terrain
   m_TagString: Untagged
@@ -806,10 +810,40 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056201405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 1, z: 20}
+  m_LocalPosition: {x: 64, y: 0, z: 64}
+  m_LocalScale: {x: 12.8, y: 1, z: 12.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2056201410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056201405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eed48dde17b15744979ea70d29f5bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChunkGridDebug: 0
+  TestGateEntry: 0
+--- !u!114 &2056201411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056201405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f29ebd0471ce884c8cf9f1efcb3b769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartObject: {fileID: 0}
+  EndObject: {fileID: 0}
+  ShowEndStart: 0
+  ShowStartEndGate: 0
