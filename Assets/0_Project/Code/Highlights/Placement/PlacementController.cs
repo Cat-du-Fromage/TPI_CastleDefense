@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using KWUtils;
+using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
@@ -9,6 +10,7 @@ using UnityEngine.InputSystem.Controls;
 
 using static UnityEngine.Mathf;
 using static UnityEngine.Physics;
+using static UnityEngine.Vector3;
 using static Unity.Mathematics.math;
 using static Unity.Mathematics.quaternion;
 using static PlayerControls;
@@ -46,10 +48,10 @@ namespace KaizerWald
             {
                 mouseStartValid = GetMouseStart(context.ReadValue<Vector2>());
             }
-            else if (context.performed && mouseStartValid)
+            else if (context.performed)
             {
-                if(!GetMouseEnd(context.ReadValue<Vector2>())) return;
-                
+                if (!mouseStartValid) return;
+                if (!GetMouseEnd(context.ReadValue<Vector2>())) return;
                 mouseDistance = mouseStart.DistanceTo(mouseEnd);
 
                 //We want to rotate when visibles
@@ -67,8 +69,6 @@ namespace KaizerWald
             {
                 coordinator.DispatchEvent(register);
                 OnMouseReleased();
-                placementsVisible = false;
-                //Clear All renderer In final version
             }
         }
 
@@ -84,22 +84,6 @@ namespace KaizerWald
             mouseDistance = 0;
             register.OnClearHighlight();
             placementsVisible = false;
-        }
-
-        private bool GetMouseStart(Vector2 mouseInput)
-        {
-            Ray singleRay = playerCamera.ScreenPointToRay(mouseInput);
-            bool hit = Raycast(singleRay, out RaycastHit singleHit, Mathf.Infinity, 1 << 8);
-            mouseStart = select(mouseStart, singleHit.point, hit);
-            return hit;
-        }
-        
-        private bool GetMouseEnd(Vector2 mouseInput)
-        {
-            Ray singleRay = playerCamera.ScreenPointToRay(mouseInput);
-            bool hit = Raycast(singleRay, out RaycastHit singleHit, Mathf.Infinity, 1 << 8);
-            mouseEnd = select(mouseEnd, singleHit.point, hit);
-            return hit;
         }
 
         public void OnSpaceKey(InputAction.CallbackContext context)
@@ -118,11 +102,11 @@ namespace KaizerWald
         
         //private float 
 
-        public void PlaceRegiments()
+        private void PlaceRegiments()
         {
             float minRegimentsFormationSize = MinSizeFormation();
+            
             //First Guard Clause : mouse goes far enough
-            //if (mouseDistance <= minRegimentsFormationSize/2f) return;
             if (!placementsVisible)
             {
                 for (int i = 0; i < coordinator.SelectedRegiments.Count; i++)
@@ -135,10 +119,10 @@ namespace KaizerWald
             //Second Guard Clause : Check if we add something
             int numUnitToAdd = (int)(mouseDistance - minRegimentsFormationSize) / coordinator.SelectedRegiments.Count;
             numUnitToAdd = Max(0, numUnitToAdd);
-
+            
             //Directions to follow
             Vector3 lineDirection = (mouseEnd - mouseStart).normalized;
-            Vector3 columnDirection = Vector3.Cross(lineDirection, Vector3.down).normalized;
+            Vector3 columnDirection = Cross(lineDirection, Vector3.down).normalized;
             
             float offsetRegiment = 0;
             for (int i = 0; i < coordinator.SelectedRegiments.Count; i++)
@@ -151,48 +135,46 @@ namespace KaizerWald
                 //OFFSET REGIMENT?
                 if (i != 0)
                 {
-                    offsetRegiment += (coordinator.SelectedRegiments[i - 1].RegimentClass.SpaceSizeBetweenUnit +
-                                       unitSpaceSize) / 2f;
+                    float totalSize = coordinator.SelectedRegiments[i - 1].RegimentClass.SpaceSizeBetweenUnit;
+                    offsetRegiment += (totalSize + unitSpaceSize) / 2f;
                 }
-
+                
                 //what we actually update
                 int numUnitPerLine = Min(regimentClass.MaxRow,regimentClass.MinRow + numUnitToAdd);
                 
+                //======================================================================================
                 //Lines information
                 float formationNumLine = currentNumUnits / (float)numUnitPerLine;
-                int formationTotalLine = CeilToInt(formationNumLine);
-                int formationNumCompleteLine = FloorToInt(formationNumLine);
+                int totalLine = CeilToInt(formationNumLine);
+                int numCompleteLine = FloorToInt(formationNumLine);
+                //======================================================================================
                 
-                int lastLineNumUnit = currentNumUnits - (formationNumCompleteLine * numUnitPerLine);
-                
-                float offset = select(0, (numUnitPerLine - lastLineNumUnit) / 2f,formationTotalLine != formationNumCompleteLine);
-                
+                int lastLineNumUnit = currentNumUnits - (numCompleteLine * numUnitPerLine);
+                float offset = select(0, (numUnitPerLine - lastLineNumUnit) / 2f,totalLine != numCompleteLine);
                 Vector3 offsetPosition = (lineDirection * unitSpaceSize) * offset;
 
                 Vector3[] formationPositions = new Vector3[currentNumUnits];
                 for (int j = 0; j < currentNumUnits; j++)
                 {
-                    int y = j / numUnitPerLine;
-                    int x = j - (y * numUnitPerLine);
+                    (int x, int y) = j.GetXY(numUnitPerLine);
 
                     Vector3 linePosition = mouseStart + lineDirection * (unitSpaceSize * x);
                     linePosition += lineDirection * offsetRegiment;
+
+                    bool isLastRow = y == totalLine - 1 && offsetPosition != zero;
+                    linePosition += (Vector3)select(zero, offsetPosition, isLastRow);
+
+                    Vector3 columnPosition = columnDirection * (unitSpaceSize * y);
                     
-                    if (y == formationTotalLine - 1 && offsetPosition != Vector3.zero)
-                    {
-                        linePosition += offsetPosition;
-                    }
-
-                    Vector3 columnPosition = linePosition + columnDirection * (unitSpaceSize * y);
-
-                    formationPositions[j] = columnPosition;
+                    //Position Here!
+                    formationPositions[j] = linePosition + columnPosition;
                 }
 
                 for (int j = 0; j < formationPositions.Length; j++)
                 {
                     Vector3 position = new (formationPositions[j].x, 0.05f, formationPositions[j].z);
-                    register.Records[coordinator.SelectedRegiments[i].RegimentID][j]
-                        .HighlightTransform.SetPositionAndRotation(position, LookRotationSafe(-columnDirection, Vector3.up));
+                    Transform highlightTransform = register.Records[coordinator.SelectedRegiments[i].RegimentID][j].HighlightTransform;
+                    highlightTransform.SetPositionAndRotation(position,LookRotationSafe(-columnDirection, up()));
                 }
 
                 offsetRegiment += (numUnitPerLine * unitSpaceSize);
@@ -210,14 +192,32 @@ namespace KaizerWald
                 min += regimentClass.SpaceSizeBetweenUnit * regimentClass.MinRow;
 
                 if (i == 0) continue;
-                float spaceBetweenRegiment =
-                    coordinator.SelectedRegiments[i - 1].RegimentClass.SpaceSizeBetweenUnit
-                    + regimentClass.SpaceSizeBetweenUnit / 2f;
+                float distanceBetweenUnit = coordinator.SelectedRegiments[i - 1].RegimentClass.SpaceSizeBetweenUnit;
+                float spaceBetweenRegiment = distanceBetweenUnit + regimentClass.SpaceSizeBetweenUnit / 2f;
                 min += spaceBetweenRegiment;
             }
 
             return min;
         }
+        
+        //==============================================================================================================
+        //Mouses Positions
+        private bool GetMouseStart(in Vector2 mouseInput)
+        {
+            Ray singleRay = playerCamera.ScreenPointToRay(mouseInput);
+            bool hit = Raycast(singleRay, out RaycastHit singleHit, Mathf.Infinity, 1 << 8);
+            mouseStart = select(mouseStart, singleHit.point, hit);
+            return hit;
+        }
+        
+        private bool GetMouseEnd(in Vector2 mouseInput)
+        {
+            Ray singleRay = playerCamera.ScreenPointToRay(mouseInput);
+            bool hit = Raycast(singleRay, out RaycastHit singleHit, Mathf.Infinity, 1 << 8);
+            mouseEnd = select(mouseEnd, singleHit.point, hit);
+            return hit;
+        }
+        //==============================================================================================================
     }
 }
 

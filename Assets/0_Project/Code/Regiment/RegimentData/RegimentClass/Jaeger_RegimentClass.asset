@@ -21,7 +21,8 @@ MonoBehaviour:
   Range: 1
   MeleeAttack: 1
   Speed: 1
+  UnitSize: {x: 1.0000001, y: 0.1553831, z: 1.3000003}
   BaseNumUnits: 16
   MinRow: 4
   MaxRow: 10
-  SpaceBetweenUnits: 0.5
+  SpaceBetweenUnits: 0

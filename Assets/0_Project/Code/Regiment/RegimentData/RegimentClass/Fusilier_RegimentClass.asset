@@ -25,4 +25,4 @@ MonoBehaviour:
   BaseNumUnits: 30
   MinRow: 5
   MaxRow: 15
-  SpaceBetweenUnits: 0.5
+  SpaceBetweenUnits: 0
