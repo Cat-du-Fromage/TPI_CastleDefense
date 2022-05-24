@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using KWUtils;
@@ -42,33 +43,23 @@ namespace KaizerWald
         public void OnRightMouseClickAndMove(InputAction.CallbackContext context)
         {
             //Guard Clause: need regiments selected
-            if (coordinator.SelectedRegiments.Count == 0) return;//On Utilise que 1 régiment pour le moment
-            
-            if (context.started)
-            {
-                mouseStartValid = GetMouseStart(context.ReadValue<Vector2>());
-            }
-            else if (context.performed)
-            {
-                if (!mouseStartValid) return;
-                if (!GetMouseEnd(context.ReadValue<Vector2>())) return;
-                mouseDistance = mouseStart.DistanceTo(mouseEnd);
+            if (coordinator.SelectedRegiments.Count == 0) return;
 
-                //We want to rotate when visibles
-                if (placementsVisible)
-                {
-                    PlaceRegiments();
-                    return;
-                }
-                
-                //Guard Clause: drag mouse long enough
-                if (mouseDistance < coordinator.SelectedRegiments[0].RegimentClass.SpaceSizeBetweenUnit) return;
-                PlaceRegiments();
-            }
-            else
+            switch (context.phase)
             {
-                coordinator.DispatchEvent(register);
-                OnMouseReleased();
+                case InputActionPhase.Started:
+                    mouseStartValid = GetMouseStart(context.ReadValue<Vector2>());
+                    break;
+                case InputActionPhase.Performed:
+                    if (!mouseStartValid || !GetMouseEnd(context.ReadValue<Vector2>())) return;
+                    mouseDistance = mouseStart.DistanceTo(mouseEnd);
+                    PlaceRegiments();
+                    break;
+                case InputActionPhase.Canceled:
+                    if (placementsVisible == false) return; //Means Left Click is pressed
+                    coordinator.DispatchEvent(register);
+                    OnMouseReleased();
+                    break;
             }
         }
 
@@ -99,24 +90,29 @@ namespace KaizerWald
                 register.OnClearHighlight();
             }
         }
-        
+
+        public void OnLeftMouseCancel(InputAction.CallbackContext context)
+        {
+            if (!placementsVisible && !context.performed) return;
+            register.OnClearHighlight();
+            placementsVisible = false;
+        }
+
         //private float 
 
         private void PlaceRegiments()
         {
-            float minRegimentsFormationSize = MinSizeFormation();
-            
             //First Guard Clause : mouse goes far enough
             if (!placementsVisible)
             {
-                for (int i = 0; i < coordinator.SelectedRegiments.Count; i++)
-                {
-                    register.OnEnableHighlight(coordinator.SelectedRegiments[i]);
-                }
+                if (mouseDistance < coordinator.SelectedRegiments[0].RegimentClass.SpaceSizeBetweenUnit) return;
+                register.EnableAllSelected();
                 placementsVisible = true;
             }
+            
+            float minRegimentsFormationSize = MinSizeFormation();
 
-            //Second Guard Clause : Check if we add something
+            //Second Guard Clause : Check if we add something (no return because we want to rotate)
             int numUnitToAdd = (int)(mouseDistance - minRegimentsFormationSize) / coordinator.SelectedRegiments.Count;
             numUnitToAdd = Max(0, numUnitToAdd);
             

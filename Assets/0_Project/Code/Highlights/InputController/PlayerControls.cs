@@ -156,6 +156,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftMouseCancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""a1238fdd-487b-4e27-9f40-b389601bd30a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -202,6 +211,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""SpaceKey"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""47b037eb-9882-473b-84e6-01cff7e66e4b"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftMouseCancel"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""35091024-52c7-44a2-9ce6-4883a62d5468"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftMouseCancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""90b8108a-24b8-4ab1-a66d-ad70514dfd43"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftMouseCancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -337,6 +379,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Placement = asset.FindActionMap("Placement", throwIfNotFound: true);
         m_Placement_RightMouseClickAndMove = m_Placement.FindAction("RightMouseClickAndMove", throwIfNotFound: true);
         m_Placement_SpaceKey = m_Placement.FindAction("SpaceKey", throwIfNotFound: true);
+        m_Placement_LeftMouseCancel = m_Placement.FindAction("LeftMouseCancel", throwIfNotFound: true);
         // Preselection
         m_Preselection = asset.FindActionMap("Preselection", throwIfNotFound: true);
         m_Preselection_MouseMove = m_Preselection.FindAction("MouseMove", throwIfNotFound: true);
@@ -454,12 +497,14 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private IPlacementActions m_PlacementActionsCallbackInterface;
     private readonly InputAction m_Placement_RightMouseClickAndMove;
     private readonly InputAction m_Placement_SpaceKey;
+    private readonly InputAction m_Placement_LeftMouseCancel;
     public struct PlacementActions
     {
         private @PlayerControls m_Wrapper;
         public PlacementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @RightMouseClickAndMove => m_Wrapper.m_Placement_RightMouseClickAndMove;
         public InputAction @SpaceKey => m_Wrapper.m_Placement_SpaceKey;
+        public InputAction @LeftMouseCancel => m_Wrapper.m_Placement_LeftMouseCancel;
         public InputActionMap Get() { return m_Wrapper.m_Placement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -475,6 +520,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @SpaceKey.started -= m_Wrapper.m_PlacementActionsCallbackInterface.OnSpaceKey;
                 @SpaceKey.performed -= m_Wrapper.m_PlacementActionsCallbackInterface.OnSpaceKey;
                 @SpaceKey.canceled -= m_Wrapper.m_PlacementActionsCallbackInterface.OnSpaceKey;
+                @LeftMouseCancel.started -= m_Wrapper.m_PlacementActionsCallbackInterface.OnLeftMouseCancel;
+                @LeftMouseCancel.performed -= m_Wrapper.m_PlacementActionsCallbackInterface.OnLeftMouseCancel;
+                @LeftMouseCancel.canceled -= m_Wrapper.m_PlacementActionsCallbackInterface.OnLeftMouseCancel;
             }
             m_Wrapper.m_PlacementActionsCallbackInterface = instance;
             if (instance != null)
@@ -485,6 +533,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @SpaceKey.started += instance.OnSpaceKey;
                 @SpaceKey.performed += instance.OnSpaceKey;
                 @SpaceKey.canceled += instance.OnSpaceKey;
+                @LeftMouseCancel.started += instance.OnLeftMouseCancel;
+                @LeftMouseCancel.performed += instance.OnLeftMouseCancel;
+                @LeftMouseCancel.canceled += instance.OnLeftMouseCancel;
             }
         }
     }
@@ -573,6 +624,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         void OnRightMouseClickAndMove(InputAction.CallbackContext context);
         void OnSpaceKey(InputAction.CallbackContext context);
+        void OnLeftMouseCancel(InputAction.CallbackContext context);
     }
     public interface IPreselectionActions
     {

@@ -134,6 +134,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LeftMouseCancel",
+                    "type": "Button",
+                    "id": "a1238fdd-487b-4e27-9f40-b389601bd30a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -180,6 +189,39 @@
                     "action": "SpaceKey",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "47b037eb-9882-473b-84e6-01cff7e66e4b",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftMouseCancel",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "35091024-52c7-44a2-9ce6-4883a62d5468",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftMouseCancel",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "90b8108a-24b8-4ab1-a66d-ad70514dfd43",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftMouseCancel",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

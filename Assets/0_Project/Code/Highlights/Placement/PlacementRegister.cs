@@ -12,24 +12,49 @@ namespace KaizerWald
 
         private readonly IHighlightSystem highlightSystem;
         
-        public List<Regiment> MovingRegiments { get; private set; } = new List<Regiment>(2);
+        public List<Regiment> MovingRegiments { get; private set; } = new (2);
+        
+//===============================================================================================================
+        //Placement Destination
+        public Dictionary<int, IHighlightable[]> CurrentDestinations { get; private set; }
+//===============================================================================================================
 
         public PlacementRegister(IHighlightSystem system, GameObject prefab, List<Regiment> regiments)
         {
             highlightSystem = system;
-            
+            //Fixe Points
             Records = new Dictionary<int, IHighlightable[]>(regiments.Count);
-            
+
             IHighlightRegister registerInterface = this;
             HighlightRegister = registerInterface;
-
+            
+            CurrentDestinations = new (regiments.Count);
             foreach (Regiment regiment in regiments)
             {
                 registerInterface.RegisterNewRegiment<Placement>(regiment, regiment.RegimentClass.PrefabPlacement);
+                CreateDuplicate(regiment);
             }
             SetUpTransformAccess();
         }
 
+//===============================================================================================================
+//Placement Destination
+        private void CreateDuplicate(Regiment regiment)
+        {
+            int regimentID = regiment.GetInstanceID();
+            GameObject prefabUsed = regiment.RegimentClass.PrefabPlacement;
+
+            CurrentDestinations.TryAdd(regimentID, new IHighlightable[regiment.UnitsTransform.Length]);
+            for (int i = 0; i < CurrentDestinations[regimentID].Length; i++)
+            {
+                Vector3 unitPosition = regiment.UnitsTransform[i].position;
+                
+                IHighlightable highlight = Object.Instantiate(prefabUsed, unitPosition + Vector3.up * 0.05f, Quaternion.identity).GetComponent<IHighlightable>();
+
+                CurrentDestinations[regimentID][i] = highlight;
+            }
+        }
+//===============================================================================================================
         public void AddMovingRegiment(Regiment regiment)
         {
             regiment.SetMoving(true);
@@ -63,6 +88,14 @@ namespace KaizerWald
             foreach (Regiment r in highlightSystem.Coordinator.Regiments)
             {
                 OnEnableHighlight(r);
+            }
+        }
+
+        public void EnableAllSelected()
+        {
+            for (int i = 0; i < highlightSystem.Coordinator.SelectedRegiments.Count; i++)
+            {
+                OnEnableHighlight(highlightSystem.Coordinator.SelectedRegiments[i]);
             }
         }
     }
