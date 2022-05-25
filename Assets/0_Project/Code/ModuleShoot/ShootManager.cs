@@ -8,6 +8,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+using static Unity.Mathematics.math;
+
 namespace KaizerWald
 {
     public partial class ShootManager : MonoBehaviour
@@ -52,6 +54,7 @@ namespace KaizerWald
                 ShootTarget(false);
                 HasTarget = false;
             }
+
             else if (!HasTarget)
             {
                 if(IsFiring) ShootTarget(false);
@@ -64,12 +67,20 @@ namespace KaizerWald
             }
         }
 
+        
+
+
+
         private void LateUpdate()
         {
             if (!results.IsCreated && !commands.IsCreated) return;
             targetHandle.Complete();
 
-            TargetRegiment = IsTargetAcquire();
+            if (IsTargetAcquire())
+            {
+                //AssignTargets();
+                ShootTarget(true);
+            };
             
             results.Dispose();
             commands.Dispose();
@@ -102,6 +113,81 @@ namespace KaizerWald
             ShootSound.PlayOneShot(shootSystem.Audio);
         }
 
+/*
+        public void ShootBullet(Unit unit)
+        {
+#if UNITY_EDITOR
+            //if (debug && !regiment.IsPlayer) Debug.Log($"unit?:t: {unit}");
+#endif     
+            if (unit.Target == null || unit.Target.IsDead)
+            {
+#if UNITY_EDITOR
+                if (debug && !regiment.IsPlayer) Debug.Log($"unit?:t: {unit}; index = {unit.IndexInRegiment}; Target {TargetRegiment}");
+#endif   
+                if(unit == null) return;
+                //int2 xTarget = unit.IndexInRegiment.GetXY2(TargetRegiment.CurrentLineFormation);
+                bool findTarget = GetTargetUnit(unit.IndexInRegiment, TargetRegiment.CurrentLineFormation, out Unit target);
+                if(!findTarget)
+                {
+                    SetNoTarget();
+                    return;
+                }
+                unit.Target = target;
+#if UNITY_EDITOR
+                //if (debug && !regiment.IsPlayer) Debug.Log($"findTarget?: {findTarget} ({target})");
+#endif     
+            }
+            
+            Transform unitTransform = unit.transform;
+            Vector3 unitPosition = unitTransform.position;
+
+            Vector3 unitTargetPosition = TargetRegiment.Units[unit.Target.IndexInRegiment].transform.position + new Vector3(0, 0.5f, 0);
+            
+            Vector3 dir = (unitTargetPosition - unitPosition).Flat().normalized;
+            dir += Random.insideUnitSphere * 0.1f;
+            
+            Vector3 pos = unitPosition + Vector3.up + unitTransform.forward;
+            
+#if UNITY_EDITOR
+            if (debug) Debug.DrawRay(pos, dir * 20f, Color.magenta, 3f);
+#endif     
+            
+            GameObject bullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
+            bullet.GetComponent<BulletComponent>().Shoot(pos,dir, HitMask);
+
+            if (ShootSound.isPlaying) return;
+            if(transform.position.DistanceTo(regiment.Units[regiment.Units.Length / 2].transform.position) > 5)
+                transform.position = regiment.Units[regiment.Units.Length / 2].transform.position;
+            ShootSound.PlayOneShot(shootSystem.Audio);
+        }
+        
+        private void AssignTargets()
+        {
+            for (int i = 0; i < regiment.Units.Length; i++)
+            {
+                //int2 xTarget = regiment.Units[i].IndexInRegiment.GetXY2(TargetRegiment.CurrentLineFormation);
+                bool findTarget = GetTargetUnit(regiment.Units[i].IndexInRegiment, TargetRegiment.CurrentLineFormation, out Unit target);
+                if (!findTarget)
+                {
+                    ShootTarget(false);
+                    return;
+                }
+#if UNITY_EDITOR
+                //if (debug && !regiment.IsPlayer) Debug.Log($"findTarget?: {findTarget} for Unity: {regiment.Units[i]}");
+#endif     
+                regiment.Units[i].Target = target;
+                break;
+            }
+            ShootTarget(true);
+        }
+        
+        public void SetNoTarget()
+        {
+            ShootTarget(false);
+            HasTarget = false;
+            TargetRegiment = null;
+        }
+*/
         private void ShootTarget(bool state)
         {
             //int numTarget = TargetRegiment.Units.Length;
@@ -114,17 +200,81 @@ namespace KaizerWald
             IsFiring = state;
         }
 
-        private Regiment IsTargetAcquire()
+        private bool IsTargetAcquire()
         {
             for (int i = 0; i < results.Length; i++)
             {
                 if (results[i].transform == null) continue;
                 if (!results[i].transform.TryGetComponent(out Unit unit)) continue;
+                if (unit.IsDead) continue;
                 HasTarget = true;
-                return unit.RegimentAttach;
+                TargetRegiment = unit.RegimentAttach;
+                //AssignTargets();
+                return true;
             }
             HasTarget = false;
-            return null;
+            TargetRegiment = null;
+            return false;
+        }
+
+        private bool GetTargetUnit(int targetIndexInRegiment, int rowWidth, out Unit unit)
+        {
+            unit = null;
+            int currentIndex = targetIndexInRegiment;
+            (int x, int y) = currentIndex.GetXY(rowWidth);
+
+            int offset = 1;
+
+            int xCheck = x;
+            int yCheck = 0;
+            bool2 leftRightReach = new bool2(false);
+            //CAREFULL: Need to adapt to CURRENT num Units!
+            int maxY = (TargetRegiment.RegimentClass.BaseNumUnits / TargetRegiment.CurrentLineFormation) - 1;
+
+            int indexLoop = 0;
+            while (!all(leftRightReach) && yCheck == maxY)
+            {
+                //Check if we can go left or right
+                offset = CheckOffset(offset, leftRightReach);
+                //Add
+                xCheck += offset * indexLoop;
+
+                if (!TargetRegiment.Units[mad(yCheck, TargetRegiment.CurrentLineFormation, xCheck)].IsDead)
+                {
+                    unit = TargetRegiment.Units[mad(yCheck, TargetRegiment.CurrentLineFormation, xCheck)];
+                    return true;
+                }
+                    
+
+                //Update left right information
+                if (xCheck == 0) leftRightReach.x = true;
+                if (xCheck == TargetRegiment.CurrentLineFormation - 1) leftRightReach.y = true;
+
+                //Go to next Line
+                if (all(leftRightReach))
+                {
+                    leftRightReach = new bool2(false);
+                    yCheck = min(maxY, yCheck+1);
+                    indexLoop = 0; // reset
+                }
+
+                
+                indexLoop++;
+            }
+            return false;
+        }
+
+        private int CheckOffset(int currentOffset, bool2 leftRightReach)
+        {
+            if (any(leftRightReach))
+            {
+                if (leftRightReach.x)
+                    return 1;
+                else
+                    return -1;
+            }
+
+            return currentOffset *= -1;;
         }
 
         private void GetTarget()
