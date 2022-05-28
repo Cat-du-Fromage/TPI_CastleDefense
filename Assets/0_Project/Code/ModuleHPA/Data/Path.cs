@@ -5,7 +5,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 
-namespace Kaizerwald
+namespace KaizerWald
 {
     public readonly struct NativePath
     {

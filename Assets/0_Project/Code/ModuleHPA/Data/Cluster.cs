@@ -8,7 +8,7 @@ using UnityEngine;
 using static KWUtils.KWmath;
 using static Unity.Mathematics.math;
 
-namespace Kaizerwald
+namespace KaizerWald
 {
     public class Cluster// ou chunk
     {

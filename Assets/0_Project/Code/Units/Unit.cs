@@ -29,6 +29,8 @@ namespace KaizerWald
         public void OnDeath()
         {
             if (IsDead) return;
+            GetComponent<Collider>().enabled = false;
+            GetComponent<Rigidbody>().Sleep();
             Animation.SetDead();
             IsDead = true;
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.026566118, g: 0.29867774, b: 0.49624193, a: 1}
+  m_IndirectSpecularColor: {r: 0.026700953, g: 0.29866886, b: 0.49627915, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -303,6 +303,7 @@ GameObject:
   - component: {fileID: 988505847}
   - component: {fileID: 988505848}
   - component: {fileID: 988505849}
+  - component: {fileID: 988505850}
   m_Layer: 0
   m_Name: RegimentSystem
   m_TagString: Untagged
@@ -356,6 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400a03262846b6f4a958bb0b543d4982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HPAUpdateManager: {fileID: 0}
   prefabPreselection: {fileID: 7284396673661896506, guid: 85f7674582f12d848a27b301127cbc1a,
     type: 3}
   <PrefabSelection>k__BackingField: {fileID: 3614250492761392, guid: d59131cfee6236c418c9a28f3c3f3f2d,
@@ -368,7 +370,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 988505841}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 53.8, y: 0, z: 113.4}
+  m_LocalPosition: {x: 8.3, y: 0, z: 64.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -394,7 +396,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 988505841}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: baf38fee88e270b4bb9908eea1f59f5d, type: 3}
   m_Name: 
@@ -421,6 +423,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d101bf387d764b48958acf9906e34d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &988505850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988505841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69dc64b787138cc4abeeb67c7e5e76ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1706437426
@@ -713,6 +727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400a03262846b6f4a958bb0b543d4982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HPAUpdateManager: {fileID: 0}
   prefabPreselection: {fileID: 7284396673661896506, guid: 85f7674582f12d848a27b301127cbc1a,
     type: 3}
   <PrefabSelection>k__BackingField: {fileID: 3614250492761392, guid: d59131cfee6236c418c9a28f3c3f3f2d,
@@ -843,7 +858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f29ebd0471ce884c8cf9f1efcb3b769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartObject: {fileID: 0}
-  EndObject: {fileID: 0}
+  ShowMovingRegiment: 0
+  ShowPaths: 0
   ShowEndStart: 0
   ShowStartEndGate: 0

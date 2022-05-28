@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using KWUtils;
 using Unity.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
-namespace Kaizerwald
+namespace KaizerWald
 {
     
     public class Gate
@@ -27,6 +28,8 @@ namespace Kaizerwald
             PathsToGates = new List<Path>(4); //4 because there might be an other gate on the same line
         }
 
+        public Vector3 CellPosition(in int2 mapSize, int cellSize = 1) => GridIndex.GetCellCenterFromIndex(mapSize, cellSize);
+        public int2 GetCellCoord(int mapSizeX) => GridIndex.GetXY2(mapSizeX);
         public NativeArray<NativePath> ToNativePaths()
         {
             NativeArray<NativePath> nativePaths = new (PathsToGates.Count, Allocator.TempJob);

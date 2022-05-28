@@ -57,23 +57,35 @@ namespace KaizerWald
                     break;
                 case InputActionPhase.Canceled:
                     if (placementsVisible == false) return; //Means Left Click is pressed
-                    coordinator.DispatchEvent(register);
+                    
                     OnMouseReleased();
+                    coordinator.DispatchEvent(register);
+                    
                     break;
             }
         }
 
         private void OnMouseReleased()
         {
+            //===================================================
+            //NEW
+            register.OnClearDynamicHighlight();
+            register.SwapDynamicToStatic();
+            //===================================================
+            
             for (int i = 0; i < coordinator.SelectedRegiments.Count; i++)
             {
-                coordinator.SelectedRegiments[i].SetMoving(true);
+                //###############################################################################################################
+                // NEW : HPA PATHFINDING (Go to: RegimentManager.cs) 
+                register.hpaPathfinder.RegisterStart(coordinator.SelectedRegiments[i]);
+                //###############################################################################################################
+                
                 if (register.MovingRegiments.Contains(coordinator.SelectedRegiments[i])) continue;
-                register.MovingRegiments.Add(coordinator.SelectedRegiments[i]);
+                register.AddMovingRegiment(coordinator.SelectedRegiments[i]);
             }
             
             mouseDistance = 0;
-            register.OnClearHighlight();
+            //register.OnClearHighlight();
             placementsVisible = false;
         }
 
@@ -91,10 +103,15 @@ namespace KaizerWald
             }
         }
 
+        //Cancel Placement
         public void OnLeftMouseCancel(InputAction.CallbackContext context)
         {
             if (!placementsVisible && !context.performed) return;
-            register.OnClearHighlight();
+            //===================================================
+            //NEW
+            register.OnClearDynamicHighlight();
+            //===================================================
+            //register.OnClearHighlight();
             placementsVisible = false;
         }
 
@@ -106,7 +123,13 @@ namespace KaizerWald
             if (!placementsVisible)
             {
                 if (mouseDistance < coordinator.SelectedRegiments[0].RegimentClass.SpaceSizeBetweenUnit) return;
-                register.EnableAllSelected();
+                
+                //===================================================
+                //NEW
+                register.EnableAllDynamicSelected();
+                //===================================================
+                
+                //register.EnableAllSelected();
                 placementsVisible = true;
             }
             
@@ -169,7 +192,13 @@ namespace KaizerWald
                 for (int j = 0; j < formationPositions.Length; j++)
                 {
                     Vector3 position = new (formationPositions[j].x, 0.05f, formationPositions[j].z);
-                    Transform highlightTransform = register.Records[coordinator.SelectedRegiments[i].RegimentID][j].HighlightTransform;
+                    
+                    //===================================================
+                    //NEW
+                    Transform highlightTransform = register.DynamicPlacements[coordinator.SelectedRegiments[i].RegimentID][j].HighlightTransform;
+                    //===================================================
+                    
+                    //Transform highlightTransform = register.Records[coordinator.SelectedRegiments[i].RegimentID][j].HighlightTransform;
                     highlightTransform.SetPositionAndRotation(position,LookRotationSafe(-columnDirection, up()));
                 }
 

@@ -154,6 +154,11 @@ namespace KaizerWald
                 Regiment regiment = coordinator.Regiments[i];
                 if (coordinator.Regiments[i] == null) continue;
                 
+                //==================================================================================================================
+                // NEW : can't preselect Enemy
+                if (!regiment.IsPlayer) continue;
+                //==================================================================================================================
+                
                 bool isInSelectionRectangle = CheckUnitsInRectangleBounds(regiment);
                 if(!regiment.IsPreselected && isInSelectionRectangle) 
                     AddPreselection(regiment);
@@ -205,6 +210,10 @@ namespace KaizerWald
             for (int i = 0; i < numRegiment; i++)
             {
                 Regiment regiment = coordinator.Regiments[i];
+                //==================================================================================================================
+                // NEW : can't preselect Enemy
+                if (!regiment.IsPlayer) continue;
+                //==================================================================================================================
                 if(regimentToPreselect.Contains(regiment.RegimentID))
                     AddPreselection(regiment);
                 else

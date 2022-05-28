@@ -1,6 +1,6 @@
 using System;
 
-namespace Kaizerwald
+namespace KaizerWald
 {
     public enum WaypointCardinal : int
     {

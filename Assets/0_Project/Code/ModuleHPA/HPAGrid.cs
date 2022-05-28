@@ -11,7 +11,7 @@ using Unity.Mathematics;
 
 using static KWUtils.KWmath;
 
-namespace Kaizerwald
+namespace KaizerWald
 {
     public partial class HPAGrid : MonoBehaviour
     {

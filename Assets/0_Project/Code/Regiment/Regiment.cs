@@ -36,7 +36,7 @@ namespace KaizerWald
         //Shoot behaviour
         public bool IsPlayer { get; set; }
         public float regimentShootRange = 10f;
-        public Regiment currentTarget;
+        //public Regiment currentTarget;
         
         //==============================================================================================================
         // Private Setters

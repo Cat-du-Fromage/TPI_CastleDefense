@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using KWUtils;
 
-namespace Kaizerwald
+namespace KaizerWald
 {
     public struct ChunkNode
     {

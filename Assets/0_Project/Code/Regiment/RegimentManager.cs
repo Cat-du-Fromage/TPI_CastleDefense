@@ -8,6 +8,13 @@ namespace KaizerWald
 {
     public class RegimentManager : MonoBehaviour, IHighlightCoordinator
     {
+        //==============================================================================================================
+        // NEW : PATHFINDING
+        public HPAPathfinder hpaPathfinder { get; private set; }
+
+        public HPAUpdateManager HPAUpdateManager;
+        //==============================================================================================================
+        
         [field:SerializeField] private GameObject prefabPreselection;
         [field:SerializeField] public GameObject PrefabSelection { get; private set; }
         public PlayerControls Controls { get; private set; }
@@ -23,6 +30,11 @@ namespace KaizerWald
 
         private void Awake()
         {
+            //==============================================================================================================
+            // NEW : PATHFINDING
+            hpaPathfinder = FindObjectOfType<HPAPathfinder>();
+            //==============================================================================================================
+            
             Controls = new PlayerControls();
             
             Regiments = GetComponent<RegimentFactory>().CreateRegiments();

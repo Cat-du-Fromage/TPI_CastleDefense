@@ -14,10 +14,16 @@ namespace KaizerWald
         
         public List<Regiment> MovingRegiments { get; private set; } = new (2);
         
-//===============================================================================================================
-        //Placement Destination
-        public Dictionary<int, IHighlightable[]> CurrentDestinations { get; private set; }
-//===============================================================================================================
+    //###############################################################################################################
+        // NEW : HPA PATHFINDING (Go to: RegimentManager.cs) 
+        public HPAPathfinder hpaPathfinder { get; private set; }
+    //###############################################################################################################
+        
+    //===============================================================================================================
+    // NEW : Placement Destination
+        public Dictionary<int, IHighlightable[]> DynamicPlacements { get; private set; }
+        public Dictionary<int, Vector3> LeadersDestination { get; private set; }
+    //===============================================================================================================
 
         public PlacementRegister(IHighlightSystem system, GameObject prefab, List<Regiment> regiments)
         {
@@ -28,36 +34,100 @@ namespace KaizerWald
             IHighlightRegister registerInterface = this;
             HighlightRegister = registerInterface;
             
-            CurrentDestinations = new (regiments.Count);
+        //###############################################################################################################
+        // NEW : HPA PATHFINDING (Go to: RegimentManager.cs) 
+            hpaPathfinder = ((RegimentManager)highlightSystem.Coordinator).hpaPathfinder;
+        //###############################################################################################################
+            
+        //===============================================================================================================
+        // NEW : Placement Destination
+            DynamicPlacements = new (regiments.Count);
+            LeadersDestination = new (regiments.Count);
+        //===============================================================================================================
             foreach (Regiment regiment in regiments)
             {
                 registerInterface.RegisterNewRegiment<Placement>(regiment, regiment.RegimentClass.PrefabPlacement);
+        //===============================================================================================================
+        // NEW : Placement Destination
                 CreateDuplicate(regiment);
+                LeadersDestination.TryAdd(regiment.RegimentID, new Vector3());
+        //===============================================================================================================
             }
             SetUpTransformAccess();
         }
+        
 
-//===============================================================================================================
-//Placement Destination
+
+    //===============================================================================================================
+    // NEW : Placement Destination
         private void CreateDuplicate(Regiment regiment)
         {
-            int regimentID = regiment.GetInstanceID();
+            int regimentID = regiment.RegimentID;
             GameObject prefabUsed = regiment.RegimentClass.PrefabPlacement;
 
-            CurrentDestinations.TryAdd(regimentID, new IHighlightable[regiment.UnitsTransform.Length]);
-            for (int i = 0; i < CurrentDestinations[regimentID].Length; i++)
+            DynamicPlacements.TryAdd(regimentID, new IHighlightable[regiment.UnitsTransform.Length]);
+            for (int i = 0; i < DynamicPlacements[regimentID].Length; i++)
             {
                 Vector3 unitPosition = regiment.UnitsTransform[i].position;
-                
-                IHighlightable highlight = Object.Instantiate(prefabUsed, unitPosition + Vector3.up * 0.05f, Quaternion.identity).GetComponent<IHighlightable>();
 
-                CurrentDestinations[regimentID][i] = highlight;
+                GameObject high = GameObject.Instantiate(prefabUsed, unitPosition + Vector3.up * 0.05f, Quaternion.identity);
+                IHighlightable highlight = high.GetComponent<IHighlightable>();
+
+                DynamicPlacements[regimentID][i] = highlight;
             }
         }
-//===============================================================================================================
+        
+        public void EnableAllDynamicSelected()
+        {
+            for (int i = 0; i < highlightSystem.Coordinator.SelectedRegiments.Count; i++)
+            {
+                OnEnableDynamicHighlight(highlightSystem.Coordinator.SelectedRegiments[i]);
+            }
+        }
+        
+        public void OnEnableDynamicHighlight(Regiment regiment)
+        {
+            if (regiment == null) return;
+            if (!DynamicPlacements.TryGetValue(regiment.RegimentID, out IHighlightable[] highlights)) return;
+            for (int i = 0; i < highlights.Length; i++)
+            {
+                highlights[i].HighlightRenderer.enabled = true;
+            }
+        }
+        
+        public void OnClearDynamicHighlight()
+        {
+            foreach ((_, IHighlightable[] highlights) in DynamicPlacements)
+            {
+                for (int i = 0; i < highlights.Length; i++)
+                {
+                    highlights[i].HighlightRenderer.enabled = false;
+                }
+            }
+        }
+
+        public void SwapDynamicToStatic()
+        {
+            foreach (Regiment regiment in highlightSystem.Coordinator.SelectedRegiments)
+            {
+                int numSelected = highlightSystem.Coordinator.SelectedRegiments.Count;
+                for (int i = 0; i < numSelected; i++)
+                {
+                    int id = regiment.RegimentID;
+                    for (int j = 0; j < DynamicPlacements[id].Length; j++)
+                    {
+                        Vector3 dynamicPosition = DynamicPlacements[id][j].HighlightTransform.position;
+                        Quaternion dynamicRotation = DynamicPlacements[id][j].HighlightTransform.rotation;
+                        Records[id][j].HighlightTransform.SetPositionAndRotation(dynamicPosition, dynamicRotation);
+                    }
+                }
+            }
+        }
+    //===============================================================================================================
         public void AddMovingRegiment(Regiment regiment)
         {
             regiment.SetMoving(true);
+            if (MovingRegiments.Contains(regiment)) return;
             MovingRegiments.Add(regiment);
         }
         
@@ -69,12 +139,14 @@ namespace KaizerWald
 
         public override void OnEnableHighlight(Regiment regiment)
         {
+            //Static Token
             if (!regiment.IsMoving)
             {
                 base.OnEnableHighlight(regiment);
                 return;
             }
             
+            //If Moving we dont reposition token!
             if (regiment == null) return;
             if (!Records.TryGetValue(regiment.RegimentID, out IHighlightable[] highlights)) return;
             for (int i = 0; i < highlights.Length; i++)

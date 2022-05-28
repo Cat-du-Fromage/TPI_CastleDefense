@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using KWUtils;
@@ -6,14 +7,25 @@ using UnityEngine;
 
 //THIS WILL NOT BE COMPILE: DEBUG ONLY
 #if UNITY_EDITOR
-namespace Kaizerwald
+namespace KaizerWald
 {
     public partial class HPAGrid
     {
+        private bool defaultDebugState = true;
         //GizmosDebug
         [SerializeField] private bool ChunkGridDebug;
-        [SerializeField] private bool TestGateEntry = false;
+        [SerializeField] private bool TestGateEntry;
         // Start is called before the first frame update
+
+        private void Start()
+        {
+            if (defaultDebugState)
+            {
+                ChunkGridDebug = TestGateEntry = true;
+            }
+        }
+
+
         private void OnDrawGizmos()
         {
             ChunkGridGizmos();

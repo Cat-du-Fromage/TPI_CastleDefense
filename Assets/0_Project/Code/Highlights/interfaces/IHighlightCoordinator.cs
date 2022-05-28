@@ -49,7 +49,8 @@ namespace KaizerWald
             }
             else if (sender is PlacementRegister)
             {
-                //Utiliser la selection
+                //((PlacementRegister)PlacementSystem.Register).LeadersDestination[]
+                
             }
         }
     }
