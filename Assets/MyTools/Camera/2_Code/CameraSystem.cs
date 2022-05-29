@@ -11,9 +11,12 @@ namespace KaizerWaldCode.RTTCamera
 {
     public class CameraSystem : MonoBehaviour, Controls.ICameraControlActions
     {
+        public bool DontDestroy;
+        
         [SerializeField]private CameraInputData cameraData;
         
         //Cache Data
+        private Controls controls;
         private Transform CameraTransform;
 
         //Inputs
@@ -27,7 +30,19 @@ namespace KaizerWaldCode.RTTCamera
         private int MoveSpeed => IsSprinting ? cameraData.baseMoveSpeed * cameraData.sprint : cameraData.baseMoveSpeed;
         private void Awake()
         {
+            if (controls == null)
+            {
+                controls = new Controls();
+            }
+            if (!controls.CameraControl.enabled)
+            {
+                controls.CameraControl.Enable();
+                controls.CameraControl.SetCallbacks(this);
+            }
+            
             CameraTransform = transform;
+            if(DontDestroy)
+                DontDestroyOnLoad(gameObject);
         }
         
         private void Update()

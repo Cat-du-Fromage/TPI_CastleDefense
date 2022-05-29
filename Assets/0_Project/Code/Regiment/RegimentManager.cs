@@ -8,6 +8,7 @@ namespace KaizerWald
 {
     public class RegimentManager : MonoBehaviour, IHighlightCoordinator
     {
+        [field:SerializeField] private GameObject prefabCamera;
         //==============================================================================================================
         // NEW : PATHFINDING
         public HPAPathfinder hpaPathfinder { get; private set; }
@@ -30,6 +31,7 @@ namespace KaizerWald
 
         private void Awake()
         {
+            if (Camera.main == null) Instantiate(prefabCamera);
             //==============================================================================================================
             // NEW : PATHFINDING
             hpaPathfinder = FindObjectOfType<HPAPathfinder>();
@@ -52,6 +54,8 @@ namespace KaizerWald
 
         private void OnDestroy()
         {
+            Controls.Disable();
+            
             for (int i = 0; i < Registers.Length; i++)
             {
                 ((HighlightBehaviour)Registers[i]).DisposeAllTransformAccessArrays();

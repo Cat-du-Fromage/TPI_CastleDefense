@@ -1,0 +1,157 @@
+.screen {
+    flex-shrink: 1;
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.midScreen > .TitleFrame {
+    opacity: 0.99;
+    height: 30%;
+}
+
+.SplitFrameColumn {
+    flex-basis: 0;
+    flex-shrink: 1;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.SplitFrameRow {
+    flex-basis: 0;
+    flex-shrink: 1;
+    flex-grow: 1;
+    flex-direction: Row;
+}
+
+.midScreen {
+    width: 20%;
+    flex-grow: 2;
+}
+
+.ContentFrame {
+    flex-grow: 2;
+    opacity: 0.99;
+    height: 30%;
+    align-items: center;
+    justify-content: center;
+    margin: 4%;
+}
+
+.LabelContainer > Label {
+    flex-shrink: 1;
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    align-content: center;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    color: rgb(178, 178, 178);
+    -unity-font-definition: resource('Fonts/RenaissanceFont/Indira_K');
+}
+
+.ButtonsCollection {
+    flex-basis: auto;
+    flex-shrink: 1;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: space-around;
+    margin: 6%;
+}
+
+.MenuButton {
+    flex-shrink: 1;
+    flex-grow: 1;
+    margin: 2%;
+    margin-right: 8%;
+    margin-left: 8%;
+    justify-content: center;
+    align-items: center;
+}
+
+.MenuButton > Button {
+    flex-shrink: 1;
+    flex-grow: 1;
+    max-height: 75px;
+    min-height: 50px;
+    max-width: 256px;
+    min-width: 256px;
+    letter-spacing: 2px;
+    color: rgb(178, 178, 178);
+    font-size: 24px;
+    -unity-font-style: bold;
+    -unity-font: resource('Fonts/RenaissanceFont/Indira_K');
+    -unity-font-definition: resource('Fonts/RenaissanceFont/Indira_K');
+    -unity-text-outline-width: 1.5px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    border-width: 1.5px;
+    background-image: resource('Gradients/GradientTop2');
+    -unity-background-image-tint-color: rgba(14, 14, 14, 0.78);
+    background-color: rgba(82, 81, 81, 0.78);
+}
+
+.MenuButton > Button:hover {
+    background-image: resource('Gradients/GradientBottom2');
+    -unity-background-image-tint-color: rgba(106, 95, 37, 0.78);
+    background-color: rgba(0, 0, 0, 0.78);
+    transition-property: -unity-background-image-tint-color;
+    transition-timing-function: linear;
+    transition-duration: 0.5s;
+}
+
+.MenuButton > Button:focus {
+    background-image: resource('Gradients/GradientTop2');
+    -unity-background-image-tint-color: rgba(0, 0, 0, 0.78);
+    background-color: rgba(106, 95, 37, 0.78);
+    border-color: rgb(106, 95, 37);
+}
+
+.MenuButton > Button:active {
+    background-image: resource('Gradients/GradientBottom2');
+    -unity-background-image-tint-color: rgba(106, 95, 37, 0.78);
+    background-color: rgba(0, 0, 0, 0.78);
+    border-color: rgb(106, 95, 37);
+}
+
+/*Make VisualElement disappears slowly (fade)*/
+VisualElement > .fadeOutAnimation {
+    opacity: 0;
+    transition-property: opacity;
+    transition-timing-function: linear;
+    transition-duration: 500ms;
+}
+
+/*
+Progress Bar
+*/
+
+VisualElement > .fadeInAnimation {
+    opacity: 100;
+    transition-property: opacity;
+    transition-timing-function: linear;
+    transition-duration: 500ms;
+    transition-delay: 500ms;
+}
+
+.unity-progress-bar{
+    opacity: 0;
+}
+
+.unity-progress-bar__container{
+    min-height: 16px;
+}
+
+.unity-progress-bar__background{
+    height: 32px;
+    border-width: 4px;
+    border-radius: 16px;
+    border-color: rgb(106, 95, 37);
+    background-color: rgba(14, 14, 14, 0.70);
+}
+
+.unity-progress-bar__progress{
+    margin: 1px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: rgb(102,0,0);
+}

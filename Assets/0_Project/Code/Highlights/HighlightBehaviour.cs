@@ -82,6 +82,7 @@ namespace KaizerWald
             {
                 for (int i = 0; i < highlights.Length; i++)
                 {
+                    if (highlights[i] == null) continue;
                     highlights[i].HighlightRenderer.enabled = false;
                 }
             }

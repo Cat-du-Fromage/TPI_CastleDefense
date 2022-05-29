@@ -1,0 +1,37 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/0_Project/UI%20Toolkit/MainMenu/Styles.uss?fileID=7433441132597879392&amp;guid=976b5a37b8c12c2498344dc5ada5317a&amp;type=3#Styles" />
+    <ui:VisualElement name="Screen" picking-mode="Ignore" class="screen" style="background-image: url(&apos;project://database/Assets/0_Project/UI%20Toolkit/images/CastleSiege1.jpg?fileID=2800000&amp;guid=4f72f49789729c449bd2a6f8c5a2b3b0&amp;type=3#CastleSiege1&apos;); -unity-background-scale-mode: scale-and-crop;">
+        <ui:VisualElement name="LeftScreen" picking-mode="Ignore" class="SplitFrameColumn" style="width: auto; max-width: none; flex-basis: 0; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: 4px;">
+            <ui:VisualElement name="LeftTopSubFrame" picking-mode="Ignore" class="SplitFrameColumn" style="background-image: none;" />
+            <ui:VisualElement name="LeftBotSubFrame" class="SplitFrameRow ContentFrame" style="background-image: url(&apos;project://database/Assets/0_Project/Code/UI/FrameTexture/bigsquareNoBg.png?fileID=2800000&amp;guid=fdec7fac0c161a947b36762c3aa7e950&amp;type=3#bigsquareNoBg&apos;);">
+                <ui:VisualElement name="ButtonsHolder" picking-mode="Ignore" class="SplitFrameColumn ButtonsCollection" style="border-left-color: rgba(170, 140, 50, 0.78); border-right-color: rgba(170, 140, 50, 0.78); border-top-color: rgba(170, 140, 50, 0.78); border-bottom-color: rgba(170, 140, 50, 0.78); border-left-width: 1.5px; border-right-width: 1.5px; border-top-width: 1.5px; border-bottom-width: 1.5px; flex-basis: 0;">
+                    <ui:VisualElement name="Play" picking-mode="Ignore" class="MenuButton" style="justify-content: center; align-items: center;">
+                        <ui:Button text="Nouvelle Partie" display-tooltip-when-elided="true" enable-rich-text="false" name="BtnPlay" focusable="false" style="border-left-width: 1.5px; border-right-width: 1.5px; border-top-width: 1.5px; border-bottom-width: 1.5px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Options" picking-mode="Ignore" class="MenuButton">
+                        <ui:Button text="Options" display-tooltip-when-elided="true" name="BtnOptions" focusable="false" style="visibility: visible; display: none;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Quit" picking-mode="Ignore" class="MenuButton">
+                        <ui:Button text="Quitter" display-tooltip-when-elided="true" name="BtnQuit" focusable="false" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="MidScreen" picking-mode="Ignore" class="midScreen SplitFrameColumn" style="width: 50%;">
+            <ui:VisualElement name="GameTitle" picking-mode="Ignore" class="SplitFrameColumn TitleFrame" style="background-image: url(&apos;project://database/Assets/0_Project/Code/UI/BannerImage/TitleBanner3NoBg.png?fileID=2800000&amp;guid=727289aefad48e843a582991be13b643&amp;type=3#TitleBanner3NoBg&apos;); opacity: 1;">
+                <ui:VisualElement name="TitleContainer" picking-mode="Ignore" style="flex-grow: 0; width: auto; height: 60%; min-height: auto; min-width: auto; top: 15%; margin-top: 4px; background-image: none;">
+                    <ui:VisualElement name="MainTitle" picking-mode="Ignore" class="SplitFrameColumn LabelContainer">
+                        <ui:Label text="KaizerWald" display-tooltip-when-elided="true" picking-mode="Ignore" style="font-size: 80px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="SubTitle" picking-mode="Ignore" class="SplitFrameColumn LabelContainer">
+                        <ui:Label text="Castle Defense" display-tooltip-when-elided="true" picking-mode="Ignore" style="font-size: 42px;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="LoadingBar" picking-mode="Ignore" style="flex-grow: 2; flex-basis: 0; flex-direction: column; justify-content: flex-end; align-items: stretch; width: 100%; margin-bottom: 10%;">
+                <ui:ProgressBar picking-mode="Ignore" name="LoadingProgress" high-value="1" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="RightScreen" picking-mode="Ignore" class="SplitFrameColumn" style="width: auto; max-width: 85%; justify-content: center; flex-basis: 0;" />
+    </ui:VisualElement>
+</ui:UXML>

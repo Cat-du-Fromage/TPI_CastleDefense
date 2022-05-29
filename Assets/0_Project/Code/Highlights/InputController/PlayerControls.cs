@@ -253,7 +253,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""MouseMove"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""00707b96-636b-4164-a0b8-ea068bc79277"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",

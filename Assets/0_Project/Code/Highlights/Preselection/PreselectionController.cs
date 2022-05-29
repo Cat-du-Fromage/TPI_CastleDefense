@@ -38,8 +38,12 @@ namespace KaizerWald
             playerCamera = Camera.main;
             register = preselectionRegister;
             coordinator = highlightCoordinator;
-            highlightCoordinator.Controls.Preselection.Enable();
-            highlightCoordinator.Controls.Preselection.SetCallbacks(this);
+
+            if (!highlightCoordinator.Controls.Preselection.enabled)
+            {
+                highlightCoordinator.Controls.Preselection.Enable();
+                highlightCoordinator.Controls.Preselection.SetCallbacks(this);
+            }
         }
         
         //------------------------------------------------------------------------------------------------------------------
