@@ -52,11 +52,12 @@ namespace KaizerWald
         private void Start()
         {
             mapSize = hpaGrid.MapSize;
-
+#if UNITY_EDITOR
             if (defaultDebugState)
             {
                 ShowPaths = ShowEndStart = ShowMovingRegiment = ShowStartEndGate = true;
             }
+#endif
         }
 
         public void RegisterStart(Regiment regiment)
